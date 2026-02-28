@@ -81,6 +81,8 @@ function renderAbout() {
   const aboutContainer = document.querySelector('#page-about .pi');
   if (!aboutContainer) return;
 
+  console.log('Rendering About section with image path: images/about.jpeg');
+
   aboutContainer.innerHTML = `
     <div class="p-header">
       <p class="p-eye">서의승 · Seo Eui-seung</p>
@@ -91,7 +93,7 @@ function renderAbout() {
       <p class="v-ref">${ABOUT_DATA.verseRef}</p>
     </div>
     <div class="about-image">
-      <img src="images/about.jpeg" alt="Seo Eui-seung">
+      <img src="./images/about.jpeg" alt="Seo Eui-seung" onerror="console.error('Image load failed: images/about.jpeg')">
     </div>
     <div class="about-body">
       ${ABOUT_DATA.body.map(p => `<p>${p}</p>`).join('')}
@@ -101,6 +103,7 @@ function renderAbout() {
     </div>
   `;
 }
+
 
 // Navigation functions (exposed to window for onclick handlers)
 window.go = function(page) {
