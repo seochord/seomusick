@@ -86,12 +86,12 @@ function renderAbout() {
       <p class="p-eye">서의승 · Seo Eui-seung</p>
       <h2 class="p-title">About</h2>
     </div>
-    <div class="about-image">
-      <img src="images/about.jpeg" alt="Seo Eui-seung">
-    </div>
     <div class="about-verse">
       <p class="v-text">${ABOUT_DATA.verse}</p>
       <p class="v-ref">${ABOUT_DATA.verseRef}</p>
+    </div>
+    <div class="about-image">
+      <img src="images/about.jpeg" alt="Seo Eui-seung">
     </div>
     <div class="about-body">
       ${ABOUT_DATA.body.map(p => `<p>${p}</p>`).join('')}
