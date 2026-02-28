@@ -85,7 +85,7 @@ function renderAbout() {
 
   aboutContainer.innerHTML = `
     <div class="p-header">
-      <p class="p-eye">서의승 · Seo Eui-seung</p>
+      <p class="p-eye">서의승 · Seo Euy-seung</p>
       <h2 class="p-title">About</h2>
     </div>
     <div class="about-verse">
