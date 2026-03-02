@@ -31,14 +31,14 @@ function renderWorksList() {
   const list = document.getElementById('works-list');
   list.innerHTML = currentWorks.map((w, i) => `
     <div class="item-card">
-      <button class="btn-del" onclick="deleteWork(${i})">Delete</button>
-      <h2>Album #${currentWorks.length - i}</h2>
-      <div class="form-group"><label>Year</label><input type="text" value="${w.year}" onchange="updateWork(${i}, 'year', this.value)"></div>
-      <div class="form-group"><label>Genre</label><input type="text" value="${w.genre}" onchange="updateWork(${i}, 'genre', this.value)"></div>
-      <div class="form-group"><label>Title</label><input type="text" value="${w.title}" onchange="updateWork(${i}, 'title', this.value)"></div>
-      <div class="form-group"><label>Desc</label><textarea onchange="updateWork(${i}, 'desc', this.value)">${w.desc}</textarea></div>
-      <div class="form-group"><label>Credit</label><input type="text" value="${w.credit}" onchange="updateWork(${i}, 'credit', this.value)"></div>
-      <div class="form-group"><label>Link</label><input type="text" value="${w.link}" onchange="updateWork(${i}, 'link', this.value)"></div>
+      <button class="btn-del" onclick="deleteWork(${i})">삭제</button>
+      <h2>앨범 #${currentWorks.length - i}</h2>
+      <div class="form-group"><label>발매 연도</label><input type="text" value="${w.year}" onchange="updateWork(${i}, 'year', this.value)"></div>
+      <div class="form-group"><label>장르</label><input type="text" value="${w.genre}" onchange="updateWork(${i}, 'genre', this.value)"></div>
+      <div class="form-group"><label>제목</label><input type="text" value="${w.title}" onchange="updateWork(${i}, 'title', this.value)"></div>
+      <div class="form-group"><label>설명</label><textarea onchange="updateWork(${i}, 'desc', this.value)">${w.desc}</textarea></div>
+      <div class="form-group"><label>크레딧</label><input type="text" value="${w.credit}" onchange="updateWork(${i}, 'credit', this.value)"></div>
+      <div class="form-group"><label>링크</label><input type="text" value="${w.link}" onchange="updateWork(${i}, 'link', this.value)"></div>
     </div>
   `).join('');
 }
@@ -47,14 +47,14 @@ function renderMenuList() {
   const list = document.getElementById('menu-list');
   list.innerHTML = currentMenus.map((m, i) => `
     <div class="item-card">
-      <button class="btn-del" onclick="deleteMenu(${i})">Delete</button>
-      <div class="form-group"><label>Menu Name</label><input type="text" value="${m.name}" onchange="updateMenu(${i}, 'name', this.value)"></div>
-      <div class="form-group"><label>Target Section ID (e.g., home, works, about)</label><input type="text" value="${m.target}" onchange="updateMenu(${i}, 'target', this.value)"></div>
+      <button class="btn-del" onclick="deleteMenu(${i})">삭제</button>
+      <div class="form-group"><label>메뉴 이름</label><input type="text" value="${m.name}" onchange="updateMenu(${i}, 'name', this.value)"></div>
+      <div class="form-group"><label>이동 섹션 ID (예: home, works, blog, about)</label><input type="text" value="${m.target}" onchange="updateMenu(${i}, 'target', this.value)"></div>
       <div class="form-group">
-        <label>Active</label>
+        <label>활성화 상태</label>
         <select onchange="updateMenu(${i}, 'active', this.value === 'true')">
-          <option value="true" ${m.active ? 'selected' : ''}>Active</option>
-          <option value="false" ${!m.active ? 'selected' : ''}>Hidden</option>
+          <option value="true" ${m.active ? 'selected' : ''}>표시</option>
+          <option value="false" ${!m.active ? 'selected' : ''}>숨김</option>
         </select>
       </div>
     </div>
@@ -63,20 +63,20 @@ function renderMenuList() {
 
 // Global functions for UI
 window.updateWork = (i, field, val) => currentWorks[i][field] = val;
-window.deleteWork = (i) => { if(confirm('Delete this album?')) { currentWorks.splice(i, 1); renderWorksList(); } };
-window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().toString(), genre: "", title: "New Album", desc: "", credit: "", link: "" }); renderWorksList(); };
+window.deleteWork = (i) => { if(confirm('이 앨범을 삭제하시겠습니까?')) { currentWorks.splice(i, 1); renderWorksList(); } };
+window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().toString(), genre: "", title: "새 앨범", desc: "", credit: "", link: "" }); renderWorksList(); };
 
 window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
-window.deleteMenu = (i) => { if(confirm('Delete this menu item?')) { currentMenus.splice(i, 1); renderMenuList(); } };
-window.addMenu = () => { currentMenus.push({ name: "New Menu", target: "home", active: true }); renderMenuList(); };
+window.deleteMenu = (i) => { if(confirm('이 메뉴 항목을 삭제하시겠습니까?')) { currentMenus.splice(i, 1); renderMenuList(); } };
+window.addMenu = () => { currentMenus.push({ name: "새 메뉴", target: "home", active: true }); renderMenuList(); };
 
 window.saveHero = () => {
   const data = {
     eye: document.getElementById('hero-eye').value,
     title: document.getElementById('hero-title').value
   };
-  console.log('Saving Hero:', data);
-  alert('Hero section saved for preview (check console for data to update data.js)');
+  console.log('Hero 데이터:', data);
+  alert('Hero 섹션이 미리보기에 저장되었습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 업데이트하세요)');
 };
 
 window.saveRelease = () => {
@@ -85,19 +85,19 @@ window.saveRelease = () => {
     desc: document.getElementById('rel-desc').value,
     link: document.getElementById('rel-link').value
   };
-  console.log('Saving Release:', data);
-  alert('Latest Release saved for preview (check console for data to update data.js)');
+  console.log('최신 발매 데이터:', data);
+  alert('최신 발매 섹션이 미리보기에 저장되었습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 업데이트하세요)');
 };
 
 window.saveWorks = () => {
-  console.log('Saving Works:', currentWorks);
-  alert('Works saved for preview (check console for data to update data.js)');
+  console.log('Works 데이터:', currentWorks);
+  alert('Works 데이터가 미리보기에 저장되었습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 업데이트하세요)');
 };
 
 window.saveMenu = () => {
   localStorage.setItem('NAV_DATA', JSON.stringify(currentMenus));
-  console.log('Saving Menu:', currentMenus);
-  alert('Menu saved for preview! Changes will appear on the main site. (To save permanently, copy the data from the console to data.js)');
+  console.log('메뉴 데이터:', currentMenus);
+  alert('메뉴가 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 복사하세요)');
 };
 
 window.saveAbout = () => {
@@ -107,8 +107,8 @@ window.saveAbout = () => {
     body: document.getElementById('about-body').value.split('\n').filter(p => p.trim())
   };
   localStorage.setItem('ABOUT_DATA', JSON.stringify(data));
-  console.log('Saving About:', data);
-  alert('About section saved for preview! Changes will appear on the main site. (To save permanently, copy the data from the console to data.js)');
+  console.log('About 데이터:', data);
+  alert('About 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 복사하세요)');
 };
 
 document.addEventListener('DOMContentLoaded', init);

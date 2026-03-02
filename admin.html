@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — SEO MUSICK</title>
+<title>관리자 — SEO MUSICK</title>
 <link href="https://fonts.googleapis.com/css2?family=Alice&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -81,76 +81,76 @@ input:focus, textarea:focus { border-color:var(--gold); background: #fff; }
     <a href="/" class="s-logo">SEO MUSICK</a>
     <ul class="s-nav">
       <li><a class="active" onclick="showTab('hero', this)">Hero</a></li>
-      <li><a onclick="showTab('release', this)">Latest Release</a></li>
-      <li><a onclick="showTab('works', this)">Works</a></li>
-      <li><a onclick="showTab('about', this)">About</a></li>
-      <li><a onclick="showTab('menu', this)">Menu</a></li>
+      <li><a onclick="showTab('release', this)">최신 발매</a></li>
+      <li><a onclick="showTab('works', this)">작환(Works)</a></li>
+      <li><a onclick="showTab('about', this)">소개(About)</a></li>
+      <li><a onclick="showTab('menu', this)">메뉴 관리</a></li>
     </ul>
   </aside>
 
   <main class="main">
     <div id="tab-hero" class="admin-tab active">
-      <h1>Hero Section</h1>
+      <h1>Hero 섹션</h1>
       <div class="form-group">
-        <label>Eye Catch (Intro text)</label>
+        <label>인트로 문구 (Eye Catch)</label>
         <input type="text" id="hero-eye">
       </div>
       <div class="form-group">
-        <label>Title (HTML allowed, use &lt;br&gt; and &lt;em&gt;)</label>
+        <label>메인 타이틀 (HTML 가능, &lt;br&gt; 및 &lt;em&gt; 사용)</label>
         <input type="text" id="hero-title">
       </div>
-      <button class="btn-save" onclick="saveHero()">Save Hero</button>
+      <button class="btn-save" onclick="saveHero()">Hero 저장</button>
     </div>
 
     <div id="tab-release" class="admin-tab">
-      <h1>Latest Release</h1>
+      <h1>최신 발매 (Latest Release)</h1>
       <div class="form-group">
-        <label>Title</label>
+        <label>제목</label>
         <input type="text" id="rel-title">
       </div>
       <div class="form-group">
-        <label>Description (e.g., 2025.12.8 · Piano · Vocal)</label>
+        <label>설명 (예: 2025.12.8 · Piano · Vocal)</label>
         <input type="text" id="rel-desc">
       </div>
       <div class="form-group">
-        <label>Listen Link</label>
+        <label>감상 링크</label>
         <input type="text" id="rel-link">
       </div>
-      <button class="btn-save" onclick="saveRelease()">Save Release</button>
+      <button class="btn-save" onclick="saveRelease()">최신 발매 저장</button>
     </div>
 
     <div id="tab-works" class="admin-tab">
-      <h1>Works (Albums)</h1>
+      <h1>작품 목록 (Albums)</h1>
       <div id="works-list"></div>
       <div style="display:flex; gap:12px;">
-        <button class="btn-save" onclick="addWork()">+ Add New Album</button>
-        <button class="btn-save" style="background:var(--muted)" onclick="saveWorks()">Save All Works</button>
+        <button class="btn-save" onclick="addWork()">+ 새 앨범 추가</button>
+        <button class="btn-save" style="background:var(--muted)" onclick="saveWorks()">모든 작품 저장</button>
       </div>
     </div>
 
     <div id="tab-about" class="admin-tab">
-      <h1>About Section</h1>
+      <h1>소개 섹션 (About)</h1>
       <div class="form-group">
-        <label>Verse (HTML allowed)</label>
+        <label>말씀 구절 (HTML 가능)</label>
         <input type="text" id="about-verse">
       </div>
       <div class="form-group">
-        <label>Verse Reference</label>
+        <label>말씀 출처</label>
         <input type="text" id="about-ref">
       </div>
       <div class="form-group">
-        <label>Body Content (One paragraph per line)</label>
+        <label>본문 내용 (줄바꿈으로 단락 구분)</label>
         <textarea id="about-body" rows="12"></textarea>
       </div>
-      <button class="btn-save" onclick="saveAbout()">Save About</button>
+      <button class="btn-save" onclick="saveAbout()">소개 저장</button>
     </div>
 
     <div id="tab-menu" class="admin-tab">
-      <h1>Navigation Menu</h1>
+      <h1>네비게이션 메뉴 관리</h1>
       <div id="menu-list"></div>
       <div style="display:flex; gap:12px;">
-        <button class="btn-save" onclick="addMenu()">+ Add Menu Item</button>
-        <button class="btn-save" style="background:var(--muted)" onclick="saveMenu()">Save All Menu</button>
+        <button class="btn-save" onclick="addMenu()">+ 메뉴 항목 추가</button>
+        <button class="btn-save" style="background:var(--muted)" onclick="saveMenu()">모든 메뉴 저장</button>
       </div>
     </div>
   </main>
