@@ -1,7 +1,6 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, BLOG_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.2');
-console.log('HERO_DATA loaded:', !!HERO_DATA);
+console.log('Main.js loaded with v1.3 - History Support');
 
 function renderSidebar() {
   const player = document.querySelector('.s-player');
@@ -21,11 +20,7 @@ function renderSidebar() {
 
 function renderHero() {
   const heroSection = document.querySelector('#page-home .hero');
-  if (!heroSection) {
-    console.error('Hero section element not found in DOM');
-    return;
-  }
-  console.log('Rendering Hero...');
+  if (!heroSection) return;
 
   heroSection.innerHTML = `
     <p class="h-eye">${HERO_DATA.eye}</p>
@@ -103,8 +98,6 @@ function renderAbout() {
   const aboutContainer = document.querySelector('#page-about .pi');
   if (!aboutContainer) return;
 
-  console.log('Rendering About section with image path: images/about.jpeg');
-
   aboutContainer.innerHTML = `
     <div class="p-header">
       <p class="p-eye">서의승 · Seo Euy-seung</p>
@@ -115,7 +108,7 @@ function renderAbout() {
       <p class="v-ref">${ABOUT_DATA.verseRef}</p>
     </div>
     <div class="about-image">
-      <img src="./images/about.jpeg" alt="Seo Eui-seung" onerror="console.error('Image load failed: images/about.jpeg')">
+      <img src="./images/about.jpeg" alt="Seo Eui-seung">
     </div>
     <div class="about-body">
       ${ABOUT_DATA.body.map(p => `<p>${p}</p>`).join('')}
@@ -126,13 +119,22 @@ function renderAbout() {
   `;
 }
 
-
-// Navigation functions (exposed to window for onclick handlers)
+// --- Navigation with Browser History support ---
 window.go = function(page) {
+  // Instead of updating DOM directly, we change the hash.
+  // The 'hashchange' listener will handle the actual DOM update.
+  window.location.hash = page;
+};
+
+function updateView() {
+  const hash = window.location.hash.replace('#', '') || 'home';
+  
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.s-nav a').forEach(a => a.classList.remove('active'));
-  const targetPage = document.getElementById('page-' + page);
-  const targetNav = document.getElementById('nav-' + page);
+  
+  const targetPage = document.getElementById('page-' + hash);
+  const targetNav = document.getElementById('nav-' + hash);
+  
   if (targetPage) targetPage.classList.add('active');
   if (targetNav) targetNav.classList.add('active');
   
@@ -141,7 +143,7 @@ window.go = function(page) {
   
   const sidebarEl = document.getElementById('sidebar');
   if (sidebarEl) sidebarEl.classList.remove('open');
-};
+}
 
 window.toggleSide = function() {
   const sidebarEl = document.getElementById('sidebar');
@@ -155,6 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBlog();
   renderAbout();
 
+  // Initial view based on hash
+  updateView();
+
+  // Listen for back/forward buttons
+  window.addEventListener('hashchange', updateView);
+
   const mainEl = document.getElementById('main');
   if (mainEl) {
     mainEl.addEventListener('click', () => {
@@ -163,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hard refresh on Ctrl+5
   document.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === '5') {
       location.reload(true);
