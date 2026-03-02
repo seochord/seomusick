@@ -3,20 +3,42 @@ import { HERO_DATA, WORKS_DATA, NAV_DATA, ABOUT_DATA, RELEASE_DATA } from './dat
 // --- DATA INITIALIZATION (Prioritize LocalStorage for session persistence) ---
 const localNav = localStorage.getItem('NAV_DATA');
 const localAbout = localStorage.getItem('ABOUT_DATA');
+const localHero = localStorage.getItem('HERO_DATA');
+const localRelease = localStorage.getItem('RELEASE_DATA');
+const localWorks = localStorage.getItem('WORKS_DATA');
 
-let currentWorks = [...WORKS_DATA];
+let currentWorks = localWorks ? JSON.parse(localWorks) : [...WORKS_DATA];
 let currentMenus = localNav ? JSON.parse(localNav) : [...NAV_DATA];
 let persistentAbout = localAbout ? JSON.parse(localAbout) : { ...ABOUT_DATA };
+let persistentHero = localHero ? JSON.parse(localHero) : { ...HERO_DATA };
+let persistentRelease = localRelease ? JSON.parse(localRelease) : { ...RELEASE_DATA };
+
+// --- PASSWORD PROTECTION ---
+const ADMIN_PW = "seomusick2026"; // 임시 비밀번호
+
+function checkAuth() {
+  if (sessionStorage.getItem('admin_auth') === 'true') return;
+  
+  const pw = prompt('관리자 비밀번호를 입력하세요:');
+  if (pw === ADMIN_PW) {
+    sessionStorage.setItem('admin_auth', 'true');
+  } else {
+    alert('비밀번호가 틀렸습니다.');
+    window.location.href = '/';
+  }
+}
 
 function init() {
+  checkAuth();
+
   // Load Hero
-  document.getElementById('hero-eye').value = HERO_DATA.eye;
-  document.getElementById('hero-title').value = HERO_DATA.title;
+  document.getElementById('hero-eye').value = persistentHero.eye;
+  document.getElementById('hero-title').value = persistentHero.title;
 
   // Load Release
-  document.getElementById('rel-title').value = RELEASE_DATA.title;
-  document.getElementById('rel-desc').value = RELEASE_DATA.desc;
-  document.getElementById('rel-link').value = RELEASE_DATA.link;
+  document.getElementById('rel-title').value = persistentRelease.title;
+  document.getElementById('rel-desc').value = persistentRelease.desc;
+  document.getElementById('rel-link').value = persistentRelease.link;
 
   // Load About
   document.getElementById('about-verse').value = persistentAbout.verse;
@@ -75,8 +97,9 @@ window.saveHero = () => {
     eye: document.getElementById('hero-eye').value,
     title: document.getElementById('hero-title').value
   };
+  localStorage.setItem('HERO_DATA', JSON.stringify(data));
   console.log('Hero 데이터:', data);
-  alert('Hero 섹션이 미리보기에 저장되었습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 업데이트하세요)');
+  alert('Hero 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
 };
 
 window.saveRelease = () => {
@@ -85,19 +108,21 @@ window.saveRelease = () => {
     desc: document.getElementById('rel-desc').value,
     link: document.getElementById('rel-link').value
   };
+  localStorage.setItem('RELEASE_DATA', JSON.stringify(data));
   console.log('최신 발매 데이터:', data);
-  alert('최신 발매 섹션이 미리보기에 저장되었습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 업데이트하세요)');
+  alert('최신 발매 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
 };
 
 window.saveWorks = () => {
+  localStorage.setItem('WORKS_DATA', JSON.stringify(currentWorks));
   console.log('Works 데이터:', currentWorks);
-  alert('Works 데이터가 미리보기에 저장되었습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 업데이트하세요)');
+  alert('Works 데이터가 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
 };
 
 window.saveMenu = () => {
   localStorage.setItem('NAV_DATA', JSON.stringify(currentMenus));
   console.log('메뉴 데이터:', currentMenus);
-  alert('메뉴가 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 복사하세요)');
+  alert('메뉴가 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다.');
 };
 
 window.saveAbout = () => {
@@ -108,7 +133,7 @@ window.saveAbout = () => {
   };
   localStorage.setItem('ABOUT_DATA', JSON.stringify(data));
   console.log('About 데이터:', data);
-  alert('About 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다. (영구 저장을 위해 콘솔의 데이터를 data.js에 복사하세요)');
+  alert('About 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다.');
 };
 
 document.addEventListener('DOMContentLoaded', init);

@@ -1,13 +1,19 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.4 - Persistent Local Data');
+console.log('Main.js loaded with v1.5 - Full Persistent Local Data');
 
 // --- DATA INITIALIZATION (Prioritize LocalStorage) ---
 const localNav = localStorage.getItem('NAV_DATA');
 const localAbout = localStorage.getItem('ABOUT_DATA');
+const localHero = localStorage.getItem('HERO_DATA');
+const localRelease = localStorage.getItem('RELEASE_DATA');
+const localWorks = localStorage.getItem('WORKS_DATA');
 
 const finalNav = localNav ? JSON.parse(localNav) : NAV_DATA;
 const finalAbout = localAbout ? JSON.parse(localAbout) : ABOUT_DATA;
+const finalHero = localHero ? JSON.parse(localHero) : HERO_DATA;
+const finalRelease = localRelease ? JSON.parse(localRelease) : RELEASE_DATA;
+const finalWorks = localWorks ? JSON.parse(localWorks) : WORKS_DATA;
 
 function renderNav() {
   const nav = document.getElementById('main-nav');
@@ -24,13 +30,13 @@ function renderSidebar() {
 
   player.innerHTML = `
     <span class="sp-label">Latest Release</span>
-    <div class="sp-title">${RELEASE_DATA.title}</div>
-    <div class="sp-desc">${RELEASE_DATA.desc}</div>
+    <div class="sp-title">${finalRelease.title}</div>
+    <div class="sp-desc">${finalRelease.desc}</div>
     <div class="sp-wave">
       <div class="wb"></div><div class="wb"></div><div class="wb"></div>
       <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
     </div>
-    <a href="${RELEASE_DATA.link}" class="sp-link" target="_blank">Listen →</a>
+    <a href="${finalRelease.link}" class="sp-link" target="_blank">Listen →</a>
   `;
 }
 
@@ -43,8 +49,8 @@ function renderHero() {
   `).join('');
 
   heroSection.innerHTML = `
-    <p class="h-eye">${HERO_DATA.eye}</p>
-    <h1 class="h-title">${HERO_DATA.title}</h1>
+    <p class="h-eye">${finalHero.eye}</p>
+    <h1 class="h-title">${finalHero.title}</h1>
     <div class="h-brand">
       <p class="hb-en">${HERO_DATA.slogan.en}</p>
       <p class="hb-ko">${HERO_DATA.slogan.ko}</p>
@@ -60,7 +66,7 @@ function renderWorks() {
   const worksContainer = document.querySelector('#page-works .pi');
   if (!worksContainer) return;
 
-  const worksHtml = WORKS_DATA.map(album => `
+  const worksHtml = finalWorks.map(album => `
     <div class="album-item">
       <div>
         <div class="a-year">${album.year}</div>
