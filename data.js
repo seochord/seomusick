@@ -40,7 +40,12 @@ export const ACTIVITIES_DATA = [
   { period: "대학 시절", name: "CCM Band", desc: "Ghost Cure, D- · 작사, 작곡, 건반, 드럼, 노래" }
 ];
 
-export const BLOG_DATA = [];
+export const NAV_DATA = [
+  { name: "Home", target: "home", active: true },
+  { name: "Works", target: "works", active: true },
+  { name: "Blog", target: "blog", active: true },
+  { name: "About", target: "about", active: true }
+];
 
 export const RELEASE_DATA = {
   title: "겨울편지",

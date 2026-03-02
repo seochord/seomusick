@@ -84,7 +84,7 @@ input:focus, textarea:focus { border-color:var(--gold); background: #fff; }
       <li><a onclick="showTab('release', this)">Latest Release</a></li>
       <li><a onclick="showTab('works', this)">Works</a></li>
       <li><a onclick="showTab('about', this)">About</a></li>
-      <li><a onclick="showTab('blog', this)">Blog</a></li>
+      <li><a onclick="showTab('menu', this)">Menu</a></li>
     </ul>
   </aside>
 
@@ -145,12 +145,12 @@ input:focus, textarea:focus { border-color:var(--gold); background: #fff; }
       <button class="btn-save" onclick="saveAbout()">Save About</button>
     </div>
 
-    <div id="tab-blog" class="admin-tab">
-      <h1>Blog Posts</h1>
-      <div id="blog-list"></div>
+    <div id="tab-menu" class="admin-tab">
+      <h1>Navigation Menu</h1>
+      <div id="menu-list"></div>
       <div style="display:flex; gap:12px;">
-        <button class="btn-save" onclick="addBlog()">+ Add New Post</button>
-        <button class="btn-save" style="background:var(--muted)" onclick="saveBlog()">Save All Posts</button>
+        <button class="btn-save" onclick="addMenu()">+ Add Menu Item</button>
+        <button class="btn-save" style="background:var(--muted)" onclick="saveMenu()">Save All Menu</button>
       </div>
     </div>
   </main>

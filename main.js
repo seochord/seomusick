@@ -1,6 +1,22 @@
-import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, BLOG_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
+import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.3 - History Support');
+console.log('Main.js loaded with v1.4 - Persistent Local Data');
+
+// --- DATA INITIALIZATION (Prioritize LocalStorage) ---
+const localNav = localStorage.getItem('NAV_DATA');
+const localAbout = localStorage.getItem('ABOUT_DATA');
+
+const finalNav = localNav ? JSON.parse(localNav) : NAV_DATA;
+const finalAbout = localAbout ? JSON.parse(localAbout) : ABOUT_DATA;
+
+function renderNav() {
+  const nav = document.getElementById('main-nav');
+  if (!nav) return;
+  
+  nav.innerHTML = finalNav.filter(n => n.active).map(n => `
+    <li><a onclick="go('${n.target}')" id="nav-${n.target}">${n.name}</a></li>
+  `).join('');
+}
 
 function renderSidebar() {
   const player = document.querySelector('.s-player');
@@ -22,6 +38,10 @@ function renderHero() {
   const heroSection = document.querySelector('#page-home .hero');
   if (!heroSection) return;
 
+  const ctaHtml = finalNav.filter(n => n.active && n.target !== 'home').map(n => `
+    <span class="btn-${n.target === 'about' ? 'p' : 's'}" onclick="go('${n.target}')">${n.name}</span>
+  `).join('');
+
   heroSection.innerHTML = `
     <p class="h-eye">${HERO_DATA.eye}</p>
     <h1 class="h-title">${HERO_DATA.title}</h1>
@@ -31,9 +51,7 @@ function renderHero() {
     </div>
     
     <div class="h-cta">
-      <span class="btn-p" onclick="go('about')">About</span>
-      <span class="btn-s" onclick="go('works')">music</span>
-      <span class="btn-s" onclick="go('blog')">Blog</span>
+      ${ctaHtml}
     </div>
   `;
 }
@@ -104,14 +122,14 @@ function renderAbout() {
       <h2 class="p-title">About</h2>
     </div>
     <div class="about-verse">
-      <p class="v-text">${ABOUT_DATA.verse}</p>
-      <p class="v-ref">${ABOUT_DATA.verseRef}</p>
+      <p class="v-text">${finalAbout.verse}</p>
+      <p class="v-ref">${finalAbout.verseRef}</p>
     </div>
     <div class="about-image">
       <img src="./images/about.jpeg" alt="Seo Eui-seung">
     </div>
     <div class="about-body">
-      ${ABOUT_DATA.body.map(p => `<p>${p}</p>`).join('')}
+      ${finalAbout.body.map(p => `<p>${p}</p>`).join('')}
     </div>
     <div class="about-close">
       <p class="close-text">For Thy Pleasure.</p>
@@ -121,8 +139,6 @@ function renderAbout() {
 
 // --- Navigation with Browser History support ---
 window.go = function(page) {
-  // Instead of updating DOM directly, we change the hash.
-  // The 'hashchange' listener will handle the actual DOM update.
   window.location.hash = page;
 };
 
@@ -151,16 +167,15 @@ window.toggleSide = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderNav();
   renderSidebar();
   renderHero();
   renderWorks();
   renderBlog();
   renderAbout();
 
-  // Initial view based on hash
   updateView();
 
-  // Listen for back/forward buttons
   window.addEventListener('hashchange', updateView);
 
   const mainEl = document.getElementById('main');

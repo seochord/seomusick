@@ -140,22 +140,6 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 .act-desc { font-family:var(--f-body); font-size:14px; line-height:1.8; color:var(--muted); margin-bottom:12px; }
 .act-award { display:inline-block; font-family:var(--f-ui); font-size:10px; color:var(--gold); border:1px solid var(--border); padding:4px 12px; border-radius:4px; font-weight:500; }
 
-/* BLOG */
-.blog-frame-container {
-  width:100%; height:85vh; overflow:hidden; border:1px solid var(--border);
-  position:relative; background:var(--bg2); border-radius:12px;
-  margin-top: 10px;
-}
-.blog-frame {
-  width:100%; height:calc(100% + 155px); border:none;
-  margin-top:-155px; /* Offset to hide Tistory header */
-}
-.bi { background:var(--bg); padding:36px 32px; transition:all 0.3s; text-decoration:none; display:block; border-bottom: 1px solid var(--border); }
-.bi:hover { background:var(--bg2); }
-.bi-tag { font-family:var(--f-ui); font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; font-weight:600; }
-.bi-title { font-family:var(--f-body); font-size:17px; font-weight:500; color:var(--cream); line-height:1.6; margin-bottom:16px; }
-.bi-date { font-family:var(--f-ui); font-size:11px; color:var(--muted); letter-spacing: 0.05em; }
-
 /* ABOUT */
 .about-image { margin-bottom:60px; max-width:600px; }
 .about-image img { width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:12px; }
@@ -194,7 +178,6 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
   .album-item { grid-template-columns:80px 1fr; gap:20px; }
   .a-link { display:none; }
   .act-grid { grid-template-columns:1fr; }
-  .blog-grid { grid-template-columns:1fr; }
   .about-id { gap:12px; }
 }
 </style>
@@ -211,13 +194,8 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 <aside class="sidebar" id="sidebar">
   <span class="s-logo" onclick="go('home')">SEO MUSICK</span>
   <p class="s-sub">서의승 · Seo Euy-seung</p>
-  <ul class="s-nav">
-    <li><a onclick="go('home')" class="active" id="nav-home">Home</a></li>
-    <li><a onclick="go('works')" id="nav-works">Works</a></li>
-    <li><a onclick="go('blog')" id="nav-blog">Blog</a></li>
-    <li style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
-      <a onclick="go('about')" id="nav-about">About</a>
-    </li>
+  <ul class="s-nav" id="main-nav">
+    <!-- Rendered by main.js -->
   </ul>
 
   <!-- SOCIAL LINKS -->

@@ -1,7 +1,12 @@
-import { HERO_DATA, WORKS_DATA, BLOG_DATA, ABOUT_DATA, RELEASE_DATA } from './data.js';
+import { HERO_DATA, WORKS_DATA, NAV_DATA, ABOUT_DATA, RELEASE_DATA } from './data.js';
+
+// --- DATA INITIALIZATION (Prioritize LocalStorage for session persistence) ---
+const localNav = localStorage.getItem('NAV_DATA');
+const localAbout = localStorage.getItem('ABOUT_DATA');
 
 let currentWorks = [...WORKS_DATA];
-let currentBlogs = [...BLOG_DATA];
+let currentMenus = localNav ? JSON.parse(localNav) : [...NAV_DATA];
+let persistentAbout = localAbout ? JSON.parse(localAbout) : { ...ABOUT_DATA };
 
 function init() {
   // Load Hero
@@ -14,12 +19,12 @@ function init() {
   document.getElementById('rel-link').value = RELEASE_DATA.link;
 
   // Load About
-  document.getElementById('about-verse').value = ABOUT_DATA.verse;
-  document.getElementById('about-ref').value = ABOUT_DATA.verseRef;
-  document.getElementById('about-body').value = ABOUT_DATA.body.join('\n');
+  document.getElementById('about-verse').value = persistentAbout.verse;
+  document.getElementById('about-ref').value = persistentAbout.verseRef;
+  document.getElementById('about-body').value = persistentAbout.body.join('\n');
 
   renderWorksList();
-  renderBlogList();
+  renderMenuList();
 }
 
 function renderWorksList() {
@@ -38,15 +43,20 @@ function renderWorksList() {
   `).join('');
 }
 
-function renderBlogList() {
-  const list = document.getElementById('blog-list');
-  list.innerHTML = currentBlogs.map((b, i) => `
+function renderMenuList() {
+  const list = document.getElementById('menu-list');
+  list.innerHTML = currentMenus.map((m, i) => `
     <div class="item-card">
-      <button class="btn-del" onclick="deleteBlog(${i})">Delete</button>
-      <div class="form-group"><label>Tag</label><input type="text" value="${b.tag}" onchange="updateBlog(${i}, 'tag', this.value)"></div>
-      <div class="form-group"><label>Title</label><input type="text" value="${b.title}" onchange="updateBlog(${i}, 'title', this.value)"></div>
-      <div class="form-group"><label>Date</label><input type="text" value="${b.date}" onchange="updateBlog(${i}, 'date', this.value)"></div>
-      <div class="form-group"><label>URL</label><input type="text" value="${b.url}" onchange="updateBlog(${i}, 'url', this.value)"></div>
+      <button class="btn-del" onclick="deleteMenu(${i})">Delete</button>
+      <div class="form-group"><label>Menu Name</label><input type="text" value="${m.name}" onchange="updateMenu(${i}, 'name', this.value)"></div>
+      <div class="form-group"><label>Target Section ID (e.g., home, works, about)</label><input type="text" value="${m.target}" onchange="updateMenu(${i}, 'target', this.value)"></div>
+      <div class="form-group">
+        <label>Active</label>
+        <select onchange="updateMenu(${i}, 'active', this.value === 'true')">
+          <option value="true" ${m.active ? 'selected' : ''}>Active</option>
+          <option value="false" ${!m.active ? 'selected' : ''}>Hidden</option>
+        </select>
+      </div>
     </div>
   `).join('');
 }
@@ -56,9 +66,9 @@ window.updateWork = (i, field, val) => currentWorks[i][field] = val;
 window.deleteWork = (i) => { if(confirm('Delete this album?')) { currentWorks.splice(i, 1); renderWorksList(); } };
 window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().toString(), genre: "", title: "New Album", desc: "", credit: "", link: "" }); renderWorksList(); };
 
-window.updateBlog = (i, field, val) => currentBlogs[i][field] = val;
-window.deleteBlog = (i) => { if(confirm('Delete this post?')) { currentBlogs.splice(i, 1); renderBlogList(); } };
-window.addBlog = () => { currentBlogs.unshift({ tag: "Life", title: "New Post", date: new Date().toLocaleDateString(), url: "" }); renderBlogList(); };
+window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
+window.deleteMenu = (i) => { if(confirm('Delete this menu item?')) { currentMenus.splice(i, 1); renderMenuList(); } };
+window.addMenu = () => { currentMenus.push({ name: "New Menu", target: "home", active: true }); renderMenuList(); };
 
 window.saveHero = () => {
   const data = {
@@ -66,7 +76,7 @@ window.saveHero = () => {
     title: document.getElementById('hero-title').value
   };
   console.log('Saving Hero:', data);
-  alert('Hero section saved locally (check console for data to update data.js)');
+  alert('Hero section saved for preview (check console for data to update data.js)');
 };
 
 window.saveRelease = () => {
@@ -76,17 +86,18 @@ window.saveRelease = () => {
     link: document.getElementById('rel-link').value
   };
   console.log('Saving Release:', data);
-  alert('Latest Release saved locally (check console for data to update data.js)');
+  alert('Latest Release saved for preview (check console for data to update data.js)');
 };
 
 window.saveWorks = () => {
   console.log('Saving Works:', currentWorks);
-  alert('Works saved locally (check console for data to update data.js)');
+  alert('Works saved for preview (check console for data to update data.js)');
 };
 
-window.saveBlog = () => {
-  console.log('Saving Blog:', currentBlogs);
-  alert('Blog saved locally (check console for data to update data.js)');
+window.saveMenu = () => {
+  localStorage.setItem('NAV_DATA', JSON.stringify(currentMenus));
+  console.log('Saving Menu:', currentMenus);
+  alert('Menu saved for preview! Changes will appear on the main site. (To save permanently, copy the data from the console to data.js)');
 };
 
 window.saveAbout = () => {
@@ -95,8 +106,9 @@ window.saveAbout = () => {
     verseRef: document.getElementById('about-ref').value,
     body: document.getElementById('about-body').value.split('\n').filter(p => p.trim())
   };
+  localStorage.setItem('ABOUT_DATA', JSON.stringify(data));
   console.log('Saving About:', data);
-  alert('About section saved locally (check console for data to update data.js)');
+  alert('About section saved for preview! Changes will appear on the main site. (To save permanently, copy the data from the console to data.js)');
 };
 
 document.addEventListener('DOMContentLoaded', init);
