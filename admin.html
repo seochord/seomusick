@@ -4,19 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — SEO MUSICK</title>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #ffffff;
   --bg2: #fcfaf7;
   --sw: 240px;
-  --cream: #1a1a18;
-  --gold: #8d734a;
+  --cream: #2a2a28;
+  --gold: #967d59;
   --muted: #7a7268;
-  --border: rgba(141,115,74,0.15);
+  --border: rgba(150,125,89,0.15);
+  
+  --f-head: 'Alice', serif;
+  --f-body: 'Lora', serif;
+  --f-ui: 'Montserrat', sans-serif;
 }
 * { box-sizing: border-box; }
-body { background:var(--bg); color:var(--cream); font-family:'Lato',sans-serif; margin:0; display:flex; height:100vh; overflow:hidden; }
+body { background:var(--bg); color:var(--cream); font-family:var(--f-body); margin:0; display:flex; height:100vh; overflow:hidden; }
 
 /* SIDEBAR */
 .sidebar {
@@ -24,44 +28,45 @@ body { background:var(--bg); color:var(--cream); font-family:'Lato',sans-serif; 
   display:flex; flex-direction:column; padding:40px 24px;
 }
 .s-logo {
-  font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600;
-  letter-spacing:0.2em; color:var(--gold); margin-bottom:40px; text-decoration:none;
+  font-family:var(--f-head); font-size:22px; font-weight:400;
+  letter-spacing:0.1em; color:var(--gold); margin-bottom:40px; text-decoration:none;
 }
 .s-nav { list-style:none; padding:0; margin:0; }
 .s-nav li { margin-bottom:10px; }
 .s-nav a {
-  display:block; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--muted); text-decoration:none; padding:10px 15px; border-radius:4px;
-  transition: all 0.3s; cursor:pointer;
+  display:block; font-family:var(--f-ui); font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; padding:12px 18px; border-radius:8px;
+  transition: all 0.3s; cursor:pointer; font-weight:500;
 }
-.s-nav a:hover { background: rgba(141,115,74,0.05); color:var(--gold); }
+.s-nav a:hover { background: rgba(150,125,89,0.05); color:var(--gold); }
 .s-nav a.active { background:var(--gold); color:var(--bg); }
 
 /* MAIN CONTENT */
-.main { flex:1; padding:60px; overflow-y:auto; }
-h1 { color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; font-size:22px; margin-bottom:40px; font-family:'Cormorant Garamond',serif; }
-h2 { color:var(--gold); font-size:16px; margin-top:0; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:10px; text-transform:uppercase; letter-spacing:0.1em; }
+.main { flex:1; padding:60px 80px; overflow-y:auto; }
+h1 { color:var(--gold); letter-spacing:0.02em; font-size:28px; margin-bottom:40px; font-family:var(--f-head); font-weight:400; }
+h2 { color:var(--gold); font-size:14px; margin-top:0; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:12px; text-transform:uppercase; letter-spacing:0.15em; font-family:var(--f-ui); font-weight:600; }
 
 .form-group { margin-bottom:24px; }
-label { display:block; font-size:11px; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em; }
+label { display:block; font-family:var(--f-ui); font-size:10px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600; }
 input, textarea {
   width:100%; background:var(--bg2); border:1px solid var(--border); color:var(--cream);
-  padding:12px; font-size:14px; outline:none; transition:border-color 0.3s; font-family:inherit;
+  padding:14px; font-size:14px; outline:none; transition:border-color 0.3s; font-family:var(--f-body);
+  border-radius:8px;
 }
-input:focus, textarea:focus { border-color:var(--gold); }
+input:focus, textarea:focus { border-color:var(--gold); background: #fff; }
 
 .btn-save {
-  padding:12px 30px; background:var(--gold); color:var(--bg); font-size:11px;
+  padding:14px 32px; background:var(--gold); color:var(--bg); font-family:var(--f-ui); font-size:10px;
   letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; border:none; margin-top:10px;
-  transition: opacity 0.3s;
+  transition: all 0.3s; border-radius:6px; font-weight:600;
 }
-.btn-save:hover { opacity:0.9; }
+.btn-save:hover { background: #b59a7a; transform: translateY(-1px); }
 
 .item-card {
-  background:var(--bg2); border:1px solid var(--border); padding:24px; margin-bottom:24px; position:relative;
+  background:var(--bg2); border:1px solid var(--border); padding:32px; margin-bottom:32px; position:relative; border-radius:12px;
 }
 .btn-del {
-  position:absolute; top:15px; right:15px; background:none; border:none; color:#ff4444; cursor:pointer; font-size:11px; text-transform:uppercase; opacity:0.6;
+  position:absolute; top:20px; right:20px; background:none; border:none; color:#ff4444; cursor:pointer; font-size:10px; text-transform:uppercase; opacity:0.6; font-family:var(--f-ui); font-weight:600; letter-spacing: 0.1em;
 }
 .btn-del:hover { opacity:1; }
 
@@ -117,7 +122,7 @@ input:focus, textarea:focus { border-color:var(--gold); }
     <div id="tab-works" class="admin-tab">
       <h1>Works (Albums)</h1>
       <div id="works-list"></div>
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex; gap:12px;">
         <button class="btn-save" onclick="addWork()">+ Add New Album</button>
         <button class="btn-save" style="background:var(--muted)" onclick="saveWorks()">Save All Works</button>
       </div>
@@ -143,7 +148,7 @@ input:focus, textarea:focus { border-color:var(--gold); }
     <div id="tab-blog" class="admin-tab">
       <h1>Blog Posts</h1>
       <div id="blog-list"></div>
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex; gap:12px;">
         <button class="btn-save" onclick="addBlog()">+ Add New Post</button>
         <button class="btn-save" style="background:var(--muted)" onclick="saveBlog()">Save All Posts</button>
       </div>
