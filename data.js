@@ -9,7 +9,13 @@ export const HERO_DATA = {
     { en: "BIBLE BELIEVER", ko: "성경 신자" },
     { en: "SOCIAL WORKER", ko: "사회복지사" },
     { en: "MUSIC MAKER", ko: "음악가" }
-  ]
+  ],
+  youtubePlaylistId: "PLY9FRgvkLkmuVN3Udh3NiEnT3sAVjZR1v"
+};
+
+export const SOCIAL_DATA = {
+  youtube: "https://www.youtube.com/@seomusick",
+  instagram: "https://www.instagram.com/seomusick/" // Replace with your actual Instagram ID if different
 };
 
 export const WORKS_DATA = [
@@ -35,6 +41,12 @@ export const ACTIVITIES_DATA = [
 ];
 
 export const BLOG_DATA = [];
+
+export const RELEASE_DATA = {
+  title: "겨울편지",
+  desc: "2025.12.8 · Piano · Vocal",
+  link: "https://www.submithub.com/link/letter-from-winter"
+};
 
 export const ABOUT_DATA = {
   verse: "당신의 길이 바닷속에 있나니,<br>당신의 행로는 거대한 물들 속에 있고",

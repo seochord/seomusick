@@ -4,102 +4,159 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — SEO MUSICK</title>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #ffffff;
   --bg2: #fcfaf7;
+  --sw: 240px;
   --cream: #1a1a18;
   --gold: #8d734a;
   --muted: #7a7268;
   --border: rgba(141,115,74,0.15);
 }
-body { background:var(--bg); color:var(--cream); font-family:'Lato',sans-serif; margin:0; padding:40px; }
-h1 { color:var(--gold); letter-spacing:0.2em; text-transform:uppercase; font-size:24px; margin-bottom:40px; }
-h2 { color:var(--gold); font-size:18px; margin-top:40px; border-bottom:1px solid var(--border); padding-bottom:10px; }
-.form-group { margin-bottom:20px; }
-label { display:block; font-size:12px; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em; }
+* { box-sizing: border-box; }
+body { background:var(--bg); color:var(--cream); font-family:'Lato',sans-serif; margin:0; display:flex; height:100vh; overflow:hidden; }
+
+/* SIDEBAR */
+.sidebar {
+  width:var(--sw); background:var(--bg2); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; padding:40px 24px;
+}
+.s-logo {
+  font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600;
+  letter-spacing:0.2em; color:var(--gold); margin-bottom:40px; text-decoration:none;
+}
+.s-nav { list-style:none; padding:0; margin:0; }
+.s-nav li { margin-bottom:10px; }
+.s-nav a {
+  display:block; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; padding:10px 15px; border-radius:4px;
+  transition: all 0.3s; cursor:pointer;
+}
+.s-nav a:hover { background: rgba(141,115,74,0.05); color:var(--gold); }
+.s-nav a.active { background:var(--gold); color:var(--bg); }
+
+/* MAIN CONTENT */
+.main { flex:1; padding:60px; overflow-y:auto; }
+h1 { color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; font-size:22px; margin-bottom:40px; font-family:'Cormorant Garamond',serif; }
+h2 { color:var(--gold); font-size:16px; margin-top:0; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:10px; text-transform:uppercase; letter-spacing:0.1em; }
+
+.form-group { margin-bottom:24px; }
+label { display:block; font-size:11px; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em; }
 input, textarea {
   width:100%; background:var(--bg2); border:1px solid var(--border); color:var(--cream);
-  padding:12px; font-size:14px; outline:none; transition:border-color 0.3s;
+  padding:12px; font-size:14px; outline:none; transition:border-color 0.3s; font-family:inherit;
 }
 input:focus, textarea:focus { border-color:var(--gold); }
+
 .btn-save {
-  padding:12px 30px; background:var(--gold); color:var(--bg); font-size:12px;
-  letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; border:none; margin-top:20px;
+  padding:12px 30px; background:var(--gold); color:var(--bg); font-size:11px;
+  letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; border:none; margin-top:10px;
+  transition: opacity 0.3s;
 }
+.btn-save:hover { opacity:0.9; }
+
 .item-card {
-  background:var(--bg2); border:1px solid var(--border); padding:20px; margin-bottom:20px; position:relative;
+  background:var(--bg2); border:1px solid var(--border); padding:24px; margin-bottom:24px; position:relative;
 }
 .btn-del {
-  position:absolute; top:10px; right:10px; background:none; border:none; color:#ff4444; cursor:pointer; font-size:12px;
+  position:absolute; top:15px; right:15px; background:none; border:none; color:#ff4444; cursor:pointer; font-size:11px; text-transform:uppercase; opacity:0.6;
 }
-.nav-admin { margin-bottom:40px; display:flex; gap:20px; }
-.nav-admin a { color:var(--muted); text-decoration:none; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; }
-.nav-admin a.active { color:var(--gold); border-bottom:1px solid var(--gold); }
+.btn-del:hover { opacity:1; }
+
+.admin-tab { display:none; animation: fadeIn 0.4s ease; }
+.admin-tab.active { display:block; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 </style>
 </head>
 <body>
-  <h1>Admin Dashboard</h1>
   
-  <nav class="nav-admin">
-    <a href="#" class="active" onclick="showTab('hero')">Hero</a>
-    <a href="#" onclick="showTab('works')">Works</a>
-    <a href="#" onclick="showTab('blog')">Blog</a>
-    <a href="#" onclick="showTab('about')">About</a>
-  </nav>
+  <aside class="sidebar">
+    <a href="/" class="s-logo">SEO MUSICK</a>
+    <ul class="s-nav">
+      <li><a class="active" onclick="showTab('hero', this)">Hero</a></li>
+      <li><a onclick="showTab('release', this)">Latest Release</a></li>
+      <li><a onclick="showTab('works', this)">Works</a></li>
+      <li><a onclick="showTab('about', this)">About</a></li>
+      <li><a onclick="showTab('blog', this)">Blog</a></li>
+    </ul>
+  </aside>
 
-  <div id="tab-hero" class="admin-tab">
-    <h2>Hero Section</h2>
-    <div class="form-group">
-      <label>Eye Catch</label>
-      <input type="text" id="hero-eye">
+  <main class="main">
+    <div id="tab-hero" class="admin-tab active">
+      <h1>Hero Section</h1>
+      <div class="form-group">
+        <label>Eye Catch (Intro text)</label>
+        <input type="text" id="hero-eye">
+      </div>
+      <div class="form-group">
+        <label>Title (HTML allowed, use &lt;br&gt; and &lt;em&gt;)</label>
+        <input type="text" id="hero-title">
+      </div>
+      <button class="btn-save" onclick="saveHero()">Save Hero</button>
     </div>
-    <div class="form-group">
-      <label>Title (HTML allowed)</label>
-      <input type="text" id="hero-title">
-    </div>
-    <button class="btn-save" onclick="saveHero()">Save Hero</button>
-  </div>
 
-  <div id="tab-works" class="admin-tab" style="display:none;">
-    <h2>Works (Albums)</h2>
-    <div id="works-list"></div>
-    <button class="btn-save" onclick="addWork()">+ Add New Album</button>
-    <button class="btn-save" style="background:var(--muted)" onclick="saveWorks()">Save All Works</button>
-  </div>
+    <div id="tab-release" class="admin-tab">
+      <h1>Latest Release</h1>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="rel-title">
+      </div>
+      <div class="form-group">
+        <label>Description (e.g., 2025.12.8 · Piano · Vocal)</label>
+        <input type="text" id="rel-desc">
+      </div>
+      <div class="form-group">
+        <label>Listen Link</label>
+        <input type="text" id="rel-link">
+      </div>
+      <button class="btn-save" onclick="saveRelease()">Save Release</button>
+    </div>
 
-  <div id="tab-blog" class="admin-tab" style="display:none;">
-    <h2>Blog Posts</h2>
-    <div id="blog-list"></div>
-    <button class="btn-save" onclick="addBlog()">+ Add New Post</button>
-    <button class="btn-save" style="background:var(--muted)" onclick="saveBlog()">Save All Posts</button>
-  </div>
+    <div id="tab-works" class="admin-tab">
+      <h1>Works (Albums)</h1>
+      <div id="works-list"></div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-save" onclick="addWork()">+ Add New Album</button>
+        <button class="btn-save" style="background:var(--muted)" onclick="saveWorks()">Save All Works</button>
+      </div>
+    </div>
 
-  <div id="tab-about" class="admin-tab" style="display:none;">
-    <h2>About Section</h2>
-    <div class="form-group">
-      <label>Verse (HTML allowed)</label>
-      <input type="text" id="about-verse">
+    <div id="tab-about" class="admin-tab">
+      <h1>About Section</h1>
+      <div class="form-group">
+        <label>Verse (HTML allowed)</label>
+        <input type="text" id="about-verse">
+      </div>
+      <div class="form-group">
+        <label>Verse Reference</label>
+        <input type="text" id="about-ref">
+      </div>
+      <div class="form-group">
+        <label>Body Content (One paragraph per line)</label>
+        <textarea id="about-body" rows="12"></textarea>
+      </div>
+      <button class="btn-save" onclick="saveAbout()">Save About</button>
     </div>
-    <div class="form-group">
-      <label>Verse Reference</label>
-      <input type="text" id="about-ref">
+
+    <div id="tab-blog" class="admin-tab">
+      <h1>Blog Posts</h1>
+      <div id="blog-list"></div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-save" onclick="addBlog()">+ Add New Post</button>
+        <button class="btn-save" style="background:var(--muted)" onclick="saveBlog()">Save All Posts</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Body Content (One paragraph per line)</label>
-      <textarea id="about-body" rows="10"></textarea>
-    </div>
-    <button class="btn-save" onclick="saveAbout()">Save About</button>
-  </div>
+  </main>
 
   <script type="module" src="admin.js"></script>
   <script>
-    function showTab(tab) {
-      document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
-      document.querySelectorAll('.nav-admin a').forEach(a => a.classList.remove('active'));
-      document.getElementById('tab-' + tab).style.display = 'block';
-      event.target.classList.add('active');
+    function showTab(tab, el) {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.s-nav a').forEach(a => a.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      el.classList.add('active');
     }
     window.showTab = showTab;
   </script>

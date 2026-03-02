@@ -1,10 +1,31 @@
-import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, BLOG_DATA, ABOUT_DATA } from './data.js';
+import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, BLOG_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.1');
+console.log('Main.js loaded with v1.2');
+console.log('HERO_DATA loaded:', !!HERO_DATA);
+
+function renderSidebar() {
+  const player = document.querySelector('.s-player');
+  if (!player) return;
+
+  player.innerHTML = `
+    <span class="sp-label">Latest Release</span>
+    <div class="sp-title">${RELEASE_DATA.title}</div>
+    <div class="sp-desc">${RELEASE_DATA.desc}</div>
+    <div class="sp-wave">
+      <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+      <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
+    </div>
+    <a href="${RELEASE_DATA.link}" class="sp-link" target="_blank">Listen →</a>
+  `;
+}
 
 function renderHero() {
   const heroSection = document.querySelector('#page-home .hero');
-  if (!heroSection) return;
+  if (!heroSection) {
+    console.error('Hero section element not found in DOM');
+    return;
+  }
+  console.log('Rendering Hero...');
 
   heroSection.innerHTML = `
     <p class="h-eye">${HERO_DATA.eye}</p>
@@ -13,6 +34,7 @@ function renderHero() {
       <p class="hb-en">${HERO_DATA.slogan.en}</p>
       <p class="hb-ko">${HERO_DATA.slogan.ko}</p>
     </div>
+    
     <div class="h-cta">
       <span class="btn-p" onclick="go('about')">About</span>
       <span class="btn-s" onclick="go('works')">music</span>
@@ -127,6 +149,7 @@ window.toggleSide = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderSidebar();
   renderHero();
   renderWorks();
   renderBlog();
