@@ -30,3 +30,8 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 
 ### Dynamic Rendering
 - `main.js` now dynamically renders all sections using data from `data.js` (with `localStorage` overrides for real-time updates).
+
+### Blog Embed Optimization
+- **Full-Width Embed**: The blog (Tistory) is embedded using an `iframe` that fills the available container width.
+- **Responsive Height**: The embed height is dynamically calculated to fit the viewport (`calc(100vh - 380px)`), with a minimum height of 600px to ensure readability.
+- **Visual Polish**: The embed container features a subtle shadow, border, and rounded corners to match the site's modern classic aesthetic.

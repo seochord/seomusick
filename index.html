@@ -156,6 +156,24 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 .about-close { padding-top:40px; border-top:1px solid var(--border); }
 .close-text { font-family:var(--f-head); font-size:36px; font-style:italic; font-weight:400; color:var(--gold); }
 
+/* BLOG */
+.blog-frame-container {
+  width: 100%;
+  height: calc(100vh - 380px); /* Adjust based on header and padding */
+  min-height: 600px;
+  background: #fcfaf7;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(141,115,74,0.08);
+}
+.blog-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
 /* ANIMATIONS */
 @keyframes fadeUp { from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:translateY(0)} }
 @keyframes wave { 0%,100%{transform:scaleY(1);opacity:.5} 50%{transform:scaleY(.4);opacity:1} }
