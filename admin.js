@@ -34,6 +34,8 @@ function init() {
   // Load Hero
   document.getElementById('hero-eye').value = persistentHero.eye;
   document.getElementById('hero-title').value = persistentHero.title;
+  document.getElementById('hero-slogan-en').value = persistentHero.slogan ? persistentHero.slogan.en : '';
+  document.getElementById('hero-slogan-ko').value = persistentHero.slogan ? persistentHero.slogan.ko : '';
 
   // Load Release
   document.getElementById('rel-title').value = persistentRelease.title;
@@ -95,7 +97,11 @@ window.addMenu = () => { currentMenus.push({ name: "새 메뉴", target: "home",
 window.saveHero = () => {
   const data = {
     eye: document.getElementById('hero-eye').value,
-    title: document.getElementById('hero-title').value
+    title: document.getElementById('hero-title').value,
+    slogan: {
+      en: document.getElementById('hero-slogan-en').value,
+      ko: document.getElementById('hero-slogan-ko').value
+    }
   };
   localStorage.setItem('HERO_DATA', JSON.stringify(data));
   console.log('Hero 데이터:', data);

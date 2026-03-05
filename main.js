@@ -52,8 +52,8 @@ function renderHero() {
     <p class="h-eye">${finalHero.eye}</p>
     <h1 class="h-title">${finalHero.title}</h1>
     <div class="h-brand">
-      <p class="hb-en">${HERO_DATA.slogan.en}</p>
-      <p class="hb-ko">${HERO_DATA.slogan.ko}</p>
+      <p class="hb-en">${finalHero.slogan ? finalHero.slogan.en : ''}</p>
+      <p class="hb-ko">${finalHero.slogan ? finalHero.slogan.ko : ''}</p>
     </div>
     
     <div class="h-cta">
