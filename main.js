@@ -67,7 +67,7 @@ function renderWorks() {
   if (!worksContainer) return;
 
   const worksHtml = finalWorks.map(album => `
-    <div class="album-item">
+    <div class="album-item" onclick="if('${album.link}') window.open('${album.link}', '_blank')">
       <div>
         <div class="a-year">${album.year}</div>
         <span class="a-genre">${album.genre}</span>
@@ -77,7 +77,7 @@ function renderWorks() {
         <p class="a-desc">${album.desc}</p>
         <p class="a-credit">${album.credit}</p>
       </div>
-      <a href="${album.link}" class="a-link" target="_blank">Listen →</a>
+      <a href="${album.link}" class="a-link" target="_blank" onclick="event.stopPropagation()">Listen →</a>
     </div>
   `).join('');
 

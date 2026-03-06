@@ -125,8 +125,8 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 .p-title { font-family:var(--f-head); font-size:clamp(44px,6vw,84px); font-weight:700; color:var(--cream); line-height:1.1; letter-spacing:0.02em; }
 
 /* ALBUMS */
-.album-item { display:grid; grid-template-columns:100px 1fr auto; gap:32px; padding:32px 0; border-bottom:1px solid var(--border); align-items:start; }
-.album-item:hover { background:rgba(141,115,74,0.02); }
+.album-item { display:grid; grid-template-columns:100px 1fr auto; gap:32px; padding:32px 0; border-bottom:1px solid var(--border); align-items:start; cursor:pointer; transition:all 0.3s ease; }
+.album-item:hover { background:rgba(141,115,74,0.02); transform:translateX(8px); }
 .a-year { font-family:var(--f-head); font-size:36px; font-weight:600; color:rgba(141,115,74,0.3); line-height:1; }
 .a-genre { display:inline-block; font-family:var(--f-ui); font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); border:1px solid var(--border); padding:4px 12px; margin-top:8px; font-weight:500; border-radius:4px; }
 .a-title { font-family:var(--f-head); font-size:26px; color:var(--cream); margin-bottom:10px; line-height:1.2; font-weight: 600; }
@@ -206,7 +206,6 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
   .h-pillars { flex-direction:column; gap:1px; }
   .hp { border-right:1px solid var(--border); }
   .album-item { grid-template-columns:80px 1fr; gap:20px; }
-  .a-link { display:none; }
   .act-grid { grid-template-columns:1fr; }
   .about-id { gap:12px; }
 }
