@@ -1,6 +1,6 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.5 - Full Persistent Local Data');
+console.log('Main.js loaded with v1.6 - Enhanced Menu Support');
 
 // --- DATA INITIALIZATION (Prioritize LocalStorage) ---
 const localNav = localStorage.getItem('NAV_DATA');
@@ -19,9 +19,12 @@ function renderNav() {
   const nav = document.getElementById('main-nav');
   if (!nav) return;
   
-  nav.innerHTML = finalNav.filter(n => n.active).map(n => `
-    <li><a onclick="go('${n.target}')" id="nav-${n.target}">${n.name}</a></li>
-  `).join('');
+  nav.innerHTML = finalNav.filter(n => n.active).map(n => {
+    if (n.url) {
+      return `<li><a href="${n.url}" target="_blank" id="nav-ext-${n.name}">${n.name}</a></li>`;
+    }
+    return `<li><a onclick="go('${n.target}')" id="nav-${n.target}">${n.name}</a></li>`;
+  }).join('');
 }
 
 function renderSidebar() {
@@ -44,9 +47,12 @@ function renderHero() {
   const heroSection = document.querySelector('#page-home .hero');
   if (!heroSection) return;
 
-  const ctaHtml = finalNav.filter(n => n.active && n.target !== 'home').map(n => `
-    <span class="btn-${n.target === 'about' ? 'p' : 's'}" onclick="go('${n.target}')">${n.name}</span>
-  `).join('');
+  const ctaHtml = finalNav.filter(n => n.active && n.target !== 'home').map(n => {
+    if (n.url) {
+      return `<a href="${n.url}" target="_blank" class="btn-s" style="text-decoration:none;">${n.name}</a>`;
+    }
+    return `<span class="btn-${n.target === 'about' ? 'p' : 's'}" onclick="go('${n.target}')">${n.name}</span>`;
+  }).join('');
 
   heroSection.innerHTML = `
     <p class="h-eye">${finalHero.eye}</p>

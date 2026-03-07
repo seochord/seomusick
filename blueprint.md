@@ -32,7 +32,16 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 - **Latest Release Management**: Update the featured release in the sidebar (Title, Desc, Link).
 - **Works Management**: CRUD operations for albums/works.
 - **About Management**: Update verse, reference, and biography text.
-- **Menu Management**: CRUD operations for the site's navigation menu.
+- **Menu Management**: CRUD operations for the site's navigation menu. Supports both internal section navigation and external links.
+- **Admin Access**: A dedicated (yet subtle) link added to the sidebar for easier management.
+
+## Planned Changes
+### Admin Page Activation & Menu Enhancement
+- **Admin Link**: Add a subtle "Admin" link at the bottom of the sidebar to provide direct access to `admin.html`.
+- **Enhanced Menu Management**: 
+    - Update `admin.js` and `admin.html` to support external URLs in the menu management section.
+    - Update `main.js` to handle both hash-based navigation (for internal sections) and direct links (for external targets like YouTube, Instagram, etc.).
+    - This allows users to add menu items that behave exactly like the links in the "Works" section.
 
 
 ### Dynamic Rendering

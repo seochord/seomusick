@@ -73,7 +73,21 @@ function renderMenuList() {
     <div class="item-card">
       <button class="btn-del" onclick="deleteMenu(${i})">삭제</button>
       <div class="form-group"><label>메뉴 이름</label><input type="text" value="${m.name}" onchange="updateMenu(${i}, 'name', this.value)"></div>
-      <div class="form-group"><label>이동 섹션 ID (예: home, works, blog, about)</label><input type="text" value="${m.target}" onchange="updateMenu(${i}, 'target', this.value)"></div>
+      <div class="form-group">
+        <label>유형</label>
+        <select onchange="toggleMenuType(${i}, this.value)">
+          <option value="section" ${!m.url ? 'selected' : ''}>내부 섹션 이동</option>
+          <option value="link" ${m.url ? 'selected' : ''}>외부 링크 연결</option>
+        </select>
+      </div>
+      <div class="form-group" id="menu-target-group-${i}" style="display: ${m.url ? 'none' : 'block'}">
+        <label>이동 섹션 ID (home, works, blog, about)</label>
+        <input type="text" value="${m.target || ''}" onchange="updateMenu(${i}, 'target', this.value)">
+      </div>
+      <div class="form-group" id="menu-url-group-${i}" style="display: ${m.url ? 'block' : 'none'}">
+        <label>외부 링크 URL (https://...)</label>
+        <input type="text" value="${m.url || ''}" onchange="updateMenu(${i}, 'url', this.value)">
+      </div>
       <div class="form-group">
         <label>활성화 상태</label>
         <select onchange="updateMenu(${i}, 'active', this.value === 'true')">
@@ -85,6 +99,17 @@ function renderMenuList() {
   `).join('');
 }
 
+window.toggleMenuType = (i, type) => {
+  if (type === 'section') {
+    currentMenus[i].url = "";
+    if (!currentMenus[i].target) currentMenus[i].target = "home";
+  } else {
+    currentMenus[i].target = "";
+    if (!currentMenus[i].url) currentMenus[i].url = "https://";
+  }
+  renderMenuList();
+};
+
 // Global functions for UI
 window.updateWork = (i, field, val) => currentWorks[i][field] = val;
 window.deleteWork = (i) => { if(confirm('이 앨범을 삭제하시겠습니까?')) { currentWorks.splice(i, 1); renderWorksList(); } };
@@ -92,7 +117,7 @@ window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().t
 
 window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
 window.deleteMenu = (i) => { if(confirm('이 메뉴 항목을 삭제하시겠습니까?')) { currentMenus.splice(i, 1); renderMenuList(); } };
-window.addMenu = () => { currentMenus.push({ name: "새 메뉴", target: "home", active: true }); renderMenuList(); };
+window.addMenu = () => { currentMenus.push({ name: "새 메뉴", target: "home", url: "", active: true }); renderMenuList(); };
 
 window.saveHero = () => {
   const data = {
