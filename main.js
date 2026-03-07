@@ -1,6 +1,6 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.6 - Enhanced Menu Support');
+console.log('Main.js loaded with v1.7 - Menu with Description Support');
 
 // --- DATA INITIALIZATION (Prioritize LocalStorage) ---
 const localNav = localStorage.getItem('NAV_DATA');
@@ -48,10 +48,21 @@ function renderHero() {
   if (!heroSection) return;
 
   const ctaHtml = finalNav.filter(n => n.active && n.target !== 'home').map(n => {
+    const descHtml = n.desc ? `<p class="cta-desc">${n.desc}</p>` : '';
+    const btnClass = n.target === 'about' ? 'btn-p' : 'btn-s';
+    
     if (n.url) {
-      return `<a href="${n.url}" target="_blank" class="btn-s" style="text-decoration:none;">${n.name}</a>`;
+      return `
+        <div class="cta-item">
+          <a href="${n.url}" target="_blank" class="btn-s" style="text-decoration:none;">${n.name}</a>
+          ${descHtml}
+        </div>`;
     }
-    return `<span class="btn-${n.target === 'about' ? 'p' : 's'}" onclick="go('${n.target}')">${n.name}</span>`;
+    return `
+      <div class="cta-item">
+        <span class="${btnClass}" onclick="go('${n.target}')">${n.name}</span>
+        ${descHtml}
+      </div>`;
   }).join('');
 
   heroSection.innerHTML = `

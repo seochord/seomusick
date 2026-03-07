@@ -107,9 +107,11 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 }
 
 .h-cta { display:flex; gap:18px; opacity:0; animation:fadeUp 1s 0.8s forwards; flex-wrap:wrap; }
-.btn-p { font-family:var(--f-ui); padding:14px 36px; background:var(--gold); color:var(--bg); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; border:none; transition:all 0.3s; display:inline-block; font-weight:500; border-radius:4px; }
+.cta-item { display: flex; flex-direction: column; gap: 8px; max-width: 280px; }
+.cta-desc { font-family: var(--f-body); font-size: 13px; color: var(--muted); line-height: 1.6; }
+.btn-p { font-family:var(--f-ui); padding:14px 36px; background:var(--gold); color:var(--bg); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; border:none; transition:all 0.3s; display:inline-block; font-weight:500; border-radius:4px; text-align: center; }
 .btn-p:hover { background:var(--gold-light); transform:translateY(-2px); }
-.btn-s { font-family:var(--f-ui); padding:14px 36px; border:1px solid var(--border); color:var(--cream); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; background:none; transition:all 0.3s; display:inline-block; font-weight:500; border-radius:4px; }
+.btn-s { font-family:var(--f-ui); padding:14px 36px; border:1px solid var(--border); color:var(--cream); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; background:none; transition:all 0.3s; display:inline-block; font-weight:500; border-radius:4px; text-align: center; }
 .btn-s:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
 
 /* PILLARS */

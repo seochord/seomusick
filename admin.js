@@ -73,6 +73,12 @@ function renderMenuList() {
     <div class="item-card">
       <button class="btn-del" onclick="deleteMenu(${i})">삭제</button>
       <div class="form-group"><label>메뉴 이름</label><input type="text" value="${m.name}" onchange="updateMenu(${i}, 'name', this.value)"></div>
+      
+      <div class="form-group">
+        <label>메뉴 설명 (Works처럼 상세 정보를 적어주세요)</label>
+        <textarea onchange="updateMenu(${i}, 'desc', this.value)" placeholder="이 메뉴에 대한 설명을 입력하세요...">${m.desc || ''}</textarea>
+      </div>
+
       <div class="form-group">
         <label>유형</label>
         <select onchange="toggleMenuType(${i}, this.value)">
@@ -80,14 +86,17 @@ function renderMenuList() {
           <option value="link" ${m.url ? 'selected' : ''}>외부 링크 연결</option>
         </select>
       </div>
+
       <div class="form-group" id="menu-target-group-${i}" style="display: ${m.url ? 'none' : 'block'}">
         <label>이동 섹션 ID (home, works, blog, about)</label>
         <input type="text" value="${m.target || ''}" onchange="updateMenu(${i}, 'target', this.value)">
       </div>
+
       <div class="form-group" id="menu-url-group-${i}" style="display: ${m.url ? 'block' : 'none'}">
         <label>외부 링크 URL (https://...)</label>
         <input type="text" value="${m.url || ''}" onchange="updateMenu(${i}, 'url', this.value)">
       </div>
+
       <div class="form-group">
         <label>활성화 상태</label>
         <select onchange="updateMenu(${i}, 'active', this.value === 'true')">
@@ -117,7 +126,7 @@ window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().t
 
 window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
 window.deleteMenu = (i) => { if(confirm('이 메뉴 항목을 삭제하시겠습니까?')) { currentMenus.splice(i, 1); renderMenuList(); } };
-window.addMenu = () => { currentMenus.push({ name: "새 메뉴", target: "home", url: "", active: true }); renderMenuList(); };
+window.addMenu = () => { currentMenus.push({ name: "새 메뉴", desc: "", target: "home", url: "", active: true }); renderMenuList(); };
 
 window.saveHero = () => {
   const data = {
