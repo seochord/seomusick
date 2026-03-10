@@ -19,16 +19,16 @@ export const SOCIAL_DATA = {
 };
 
 export const WORKS_DATA = [
-  { year: "2025", genre: "Piano · Vocal", title: "겨울편지", desc: "피아노와 보컬의 쓸쓸함에 해금의 울림이 더해져 깊은 여운을 남기는 겨울의 서정곡.", credit: "Lyric & Composed & Arranged by 서의승 · Heagum by 이다정", link: "https://www.submithub.com/link/letter-from-winter" },
-  { year: "2025", genre: "Compilation", title: "A Time to Comfort", desc: "그동안 발표해온 피아노 연주곡들을 모아 담은 컴필레이션. 위로를 주는 음악을 만들자는 다짐의 결실.", credit: "All Composed & Arranged & Piano by 서의승", link: "https://www.submithub.com/link/a-time-to-comfort" },
-  { year: "2025", genre: "Piano", title: "Chapter 3: Come Back", desc: "헤어진 연인들을 위한 곡. Come Back / Give Me Your Peace / Sunset 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/chapter-3-come-back" },
-  { year: "2024", genre: "Piano", title: "Chapter 2: Eternal Love", desc: "새로운 만남, 영원한 사랑. Nice to meet you / A path together / Bellis Perennis / My God 수록.", credit: "All Music Produced by 서의승", link: "https://www.submithub.com/link/chapter-2-eternal-love" },
-  { year: "2024", genre: "Electronic", title: "CITY", desc: "도시생활의 낯섦과 빠르게 움직이는 사람들을 신시사이저와 드럼루프로 표현. City / Underground / Rain 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/city-54" },
-  { year: "2020", genre: "K-pop", title: "이름찾기", desc: "이별 후 재회를 결심한 한 남자의 이야기. Happy / 이름찾기 / 정류장 수록.", credit: "Lyrics & Composed & Arranged by 서의승", link: "https://www.submithub.com/link/finding-name" },
-  { year: "2020", genre: "Piano", title: "피아노약국 3호점", desc: "시리즈 마지막. 정원 / 산보 / 퇴근길 / 하나되요 수록.", credit: "Composed by 서의승", link: "https://www.submithub.com/link/3-piano-cure-3rd" },
-  { year: "2016", genre: "Piano", title: "피아노약국 2호점", desc: "Antioxidant / Soft song / Missing you / Last night 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/2-piano-cure-2nd" },
-  { year: "2015", genre: "Gospel", title: "Chapter 1", desc: "인생의 또 다른 챕터. Withdraw / Approach / O Lord / Who? 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/chapter-1-1" },
-  { year: "2011", genre: "Piano", title: "피아노약국 1호점", desc: "현대인의 스트레스를 음악으로 치료하는 뮤직 테라피의 시작. Weekend / Blowing Wind / Antidepressants / Everlasting Love 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/piano-cure" }
+  { year: "2025", genre: "Piano · Vocal", title: "겨울편지", desc: "피아노와 보컬의 쓸쓸함에 해금의 울림이 더해져 깊은 여운을 남기는 겨울의 서정곡.", credit: "Lyric & Composed & Arranged by 서의승 · Heagum by 이다정", link: "https://www.submithub.com/link/letter-from-winter", image: "" },
+  { year: "2025", genre: "Compilation", title: "A Time to Comfort", desc: "그동안 발표해온 피아노 연주곡들을 모아 담은 컴필레이션. 위로를 주는 음악을 만들자는 다짐의 결실.", credit: "All Composed & Arranged & Piano by 서의승", link: "https://www.submithub.com/link/a-time-to-comfort", image: "images/timetocomfort.jpg" },
+  { year: "2025", genre: "Piano", title: "Chapter 3: Come Back", desc: "헤어진 연인들을 위한 곡. Come Back / Give Me Your Peace / Sunset 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/chapter-3-come-back", image: "images/chapter3.jpg" },
+  { year: "2024", genre: "Piano", title: "Chapter 2: Eternal Love", desc: "새로운 만남, 영원한 사랑. Nice to meet you / A path together / Bellis Perennis / My God 수록.", credit: "All Music Produced by 서의승", link: "https://www.submithub.com/link/chapter-2-eternal-love", image: "images/chapter2.jpg" },
+  { year: "2024", genre: "Electronic", title: "CITY", desc: "도시생활의 낯섦과 빠르게 움직이는 사람들을 신시사이저와 드럼루프로 표현. City / Underground / Rain 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/city-54", image: "images/city.jpg" },
+  { year: "2020", genre: "K-pop", title: "이름찾기", desc: "이별 후 재회를 결심한 한 남자의 이야기. Happy / 이름찾기 / 정류장 수록.", credit: "Lyrics & Composed & Arranged by 서의승", link: "https://www.submithub.com/link/finding-name", image: "images/findingname.jpg" },
+  { year: "2020", genre: "Piano", title: "피아노약국 3호점", desc: "시리즈 마지막. 정원 / 산보 / 퇴근길 / 하나되요 수록.", credit: "Composed by 서의승", link: "https://www.submithub.com/link/3-piano-cure-3rd", image: "images/pianocure3.jpg" },
+  { year: "2016", genre: "Piano", title: "피아노약국 2호점", desc: "Antioxidant / Soft song / Missing you / Last night 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/2-piano-cure-2nd", image: "images/pianocure2.jpg" },
+  { year: "2015", genre: "Gospel", title: "Chapter 1", desc: "인생의 또 다른 챕터. Withdraw / Approach / O Lord / Who? 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/chapter-1-1", image: "images/chapter1.jpg" },
+  { year: "2011", genre: "Piano", title: "피아노약국 1호점", desc: "현대인의 스트레스를 음악으로 치료하는 뮤직 테라피의 시작. Weekend / Blowing Wind / Antidepressants / Everlasting Love 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/piano-cure", image: "images/pianocure1.jpg" }
 ];
 
 export const ACTIVITIES_DATA = [

@@ -45,13 +45,15 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 - **Admin Access**: A dedicated (yet subtle) link added to the sidebar for easier management.
 
 ## Planned Changes
-### Admin Page Activation & Menu Enhancement
-- **Admin Link**: Add a subtle "Admin" link at the bottom of the sidebar to provide direct access to `admin.html`.
-- **Enhanced Menu Management**: 
-    - Update `admin.js` and `admin.html` to support external URLs in the menu management section.
-    - Update `main.js` to handle both hash-based navigation (for internal sections) and direct links (for external targets like YouTube, Instagram, etc.).
-    - This allows users to add menu items that behave exactly like the links in the "Works" section.
-
+### Works Management Enhancement (Images & Links)
+- **Album Art Integration**: Add an `image` field to each work item in `data.js` and `admin.js`.
+- **Admin Photo Upload/Path**: Update the admin page (`admin.html` and `admin.js`) to allow entering an image path (or eventually uploading) for each work.
+- **Visual Grid in Admin**: Display a small thumbnail of the album art in the admin panel's works list for better visual management.
+- **Enhanced Display in Works Page**:
+    - Update `main.js` and `index.html` to display the album art alongside the work details.
+    - The layout will be adjusted to accommodate a square or rectangular thumbnail (approx. 100-120px) for each entry.
+    - Ensure that clicking the image (or the item) navigates to the provided external link.
+- **Responsive Design**: Ensure the album art scales gracefully on mobile devices.
 
 ### Dynamic Rendering
 - `main.js` now dynamically renders all sections using data from `data.js` (with `localStorage` overrides for real-time updates).

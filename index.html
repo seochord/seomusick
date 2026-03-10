@@ -128,8 +128,11 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 .p-title { font-family:var(--f-head); font-size:clamp(44px,6vw,84px); font-weight:700; color:var(--cream); line-height:1.1; letter-spacing:0.02em; }
 
 /* ALBUMS */
-.album-item { display:grid; grid-template-columns:100px 1fr auto; gap:32px; padding:32px 0; border-bottom:1px solid var(--border); align-items:start; cursor:pointer; transition:all 0.3s ease; }
+.album-item { display:grid; grid-template-columns:120px 100px 1fr auto; gap:32px; padding:32px 0; border-bottom:1px solid var(--border); align-items:start; cursor:pointer; transition:all 0.3s ease; }
 .album-item:hover { background:rgba(51, 92, 129, 0.03); transform:translateX(8px); }
+.a-img { width:120px; height:120px; border-radius:8px; overflow:hidden; border:1px solid var(--border); background:var(--bg2); }
+.a-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+.album-item:hover .a-img img { transform:scale(1.08); }
 .a-year { font-family:var(--f-head); font-size:36px; font-weight:600; color:rgba(51, 92, 129, 0.2); line-height:1; }
 .a-genre { display:inline-block; font-family:var(--f-ui); font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); border:1px solid var(--border); padding:4px 12px; margin-top:8px; font-weight:500; border-radius:4px; }
 .a-title { font-family:var(--f-head); font-size:26px; color:var(--cream); margin-bottom:10px; line-height:1.2; font-weight: 600; }
@@ -208,7 +211,11 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
   .hb-ko { font-size: 18px; }
   .h-pillars { flex-direction:column; gap:1px; }
   .hp { border-right:1px solid var(--border); }
-  .album-item { grid-template-columns:80px 1fr; gap:20px; }
+  .album-item { grid-template-columns:100px 1fr; gap:16px; }
+  .a-img { width:100px; height:100px; grid-row: span 2; }
+  .a-year { font-size: 28px; }
+  .a-title { font-size: 22px; }
+  .a-link { margin-top: 12px; }
   .act-grid { grid-template-columns:1fr; }
   .about-id { gap:12px; }
 }

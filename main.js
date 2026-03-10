@@ -85,6 +85,9 @@ function renderWorks() {
 
   const worksHtml = finalWorks.map(album => `
     <div class="album-item" onclick="if('${album.link}') window.open('${album.link}', '_blank')">
+      <div class="a-img">
+        ${album.image ? `<img src="${album.image}" alt="${album.title}">` : '<div style="width:100%;height:100%;background:rgba(51,92,129,0.05);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(51,92,129,0.2);font-family:var(--f-ui);">NO IMAGE</div>'}
+      </div>
       <div>
         <div class="a-year">${album.year}</div>
         <span class="a-genre">${album.genre}</span>

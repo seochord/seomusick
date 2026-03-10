@@ -57,12 +57,27 @@ function renderWorksList() {
     <div class="item-card">
       <button class="btn-del" onclick="deleteWork(${i})">삭제</button>
       <h2>앨범 #${currentWorks.length - i}</h2>
-      <div class="form-group"><label>발매 연도</label><input type="text" value="${w.year}" onchange="updateWork(${i}, 'year', this.value)"></div>
-      <div class="form-group"><label>장르</label><input type="text" value="${w.genre}" onchange="updateWork(${i}, 'genre', this.value)"></div>
-      <div class="form-group"><label>제목</label><input type="text" value="${w.title}" onchange="updateWork(${i}, 'title', this.value)"></div>
-      <div class="form-group"><label>설명</label><textarea onchange="updateWork(${i}, 'desc', this.value)">${w.desc}</textarea></div>
-      <div class="form-group"><label>크레딧</label><input type="text" value="${w.credit}" onchange="updateWork(${i}, 'credit', this.value)"></div>
-      <div class="form-group"><label>링크</label><input type="text" value="${w.link}" onchange="updateWork(${i}, 'link', this.value)"></div>
+      
+      <div style="display:flex; gap:32px; align-items:start; margin-bottom:20px;">
+        <div style="width:140px;">
+          <label style="display:block; margin-bottom:12px;">커버 이미지</label>
+          <div style="width:140px; height:140px; background:#f0f4f8; border-radius:12px; overflow:hidden; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; margin-bottom:12px;">
+            ${w.image ? `<img src="${w.image}" style="width:100%; height:100%; object-fit:cover;">` : `<span style="font-size:10px; color:var(--muted); font-family:var(--f-ui);">IMAGE EMPTY</span>`}
+          </div>
+          <input type="text" value="${w.image || ''}" placeholder="images/..." onchange="updateWork(${i}, 'image', this.value); renderWorksList();" style="font-size:11px; padding:10px;">
+        </div>
+        
+        <div style="flex:1;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div class="form-group"><label>발매 연도</label><input type="text" value="${w.year}" onchange="updateWork(${i}, 'year', this.value)"></div>
+            <div class="form-group"><label>장르</label><input type="text" value="${w.genre}" onchange="updateWork(${i}, 'genre', this.value)"></div>
+          </div>
+          <div class="form-group"><label>제목</label><input type="text" value="${w.title}" onchange="updateWork(${i}, 'title', this.value)"></div>
+          <div class="form-group"><label>설명</label><textarea onchange="updateWork(${i}, 'desc', this.value)" rows="3">${w.desc}</textarea></div>
+          <div class="form-group"><label>크레딧</label><input type="text" value="${w.credit}" onchange="updateWork(${i}, 'credit', this.value)"></div>
+          <div class="form-group"><label>링크</label><input type="text" value="${w.link}" onchange="updateWork(${i}, 'link', this.value)"></div>
+        </div>
+      </div>
     </div>
   `).join('');
 }
@@ -122,7 +137,7 @@ window.toggleMenuType = (i, type) => {
 // Global functions for UI
 window.updateWork = (i, field, val) => currentWorks[i][field] = val;
 window.deleteWork = (i) => { if(confirm('이 앨범을 삭제하시겠습니까?')) { currentWorks.splice(i, 1); renderWorksList(); } };
-window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().toString(), genre: "", title: "새 앨범", desc: "", credit: "", link: "" }); renderWorksList(); };
+window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().toString(), genre: "", title: "새 앨범", desc: "", credit: "", link: "", image: "" }); renderWorksList(); };
 
 window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
 window.deleteMenu = (i) => { if(confirm('이 메뉴 항목을 삭제하시겠습니까?')) { currentMenus.splice(i, 1); renderMenuList(); } };
