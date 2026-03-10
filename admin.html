@@ -82,7 +82,8 @@ input:focus, textarea:focus { border-color:var(--gold); background: #fff; }
     <ul class="s-nav">
       <li><a class="active" onclick="showTab('hero', this)">Hero</a></li>
       <li><a onclick="showTab('release', this)">최신 발매</a></li>
-      <li><a onclick="showTab('works', this)">작환(Works)</a></li>
+      <li><a onclick="showTab('works', this)">작품(Works)</a></li>
+      <li><a onclick="showTab('activities', this)">활동(Activities)</a></li>
       <li><a onclick="showTab('about', this)">소개(About)</a></li>
       <li><a onclick="showTab('menu', this)">메뉴 관리</a></li>
     </ul>
@@ -133,6 +134,15 @@ input:focus, textarea:focus { border-color:var(--gold); background: #fff; }
       <div style="display:flex; gap:12px;">
         <button class="btn-save" onclick="addWork()">+ 새 앨범 추가</button>
         <button class="btn-save" style="background:var(--muted)" onclick="saveWorks()">모든 작품 저장</button>
+      </div>
+    </div>
+
+    <div id="tab-activities" class="admin-tab">
+      <h1>활동 목록 (Activities)</h1>
+      <div id="activities-list"></div>
+      <div style="display:flex; gap:12px;">
+        <button class="btn-save" onclick="addActivity()">+ 새 활동 추가</button>
+        <button class="btn-save" style="background:var(--muted)" onclick="saveActivities()">모든 활동 저장</button>
       </div>
     </div>
 

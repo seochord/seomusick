@@ -1,4 +1,4 @@
-import { HERO_DATA, WORKS_DATA, NAV_DATA, ABOUT_DATA, RELEASE_DATA } from './data.js';
+import { HERO_DATA, WORKS_DATA, NAV_DATA, ABOUT_DATA, RELEASE_DATA, ACTIVITIES_DATA } from './data.js';
 
 // --- DATA INITIALIZATION (Prioritize LocalStorage for session persistence) ---
 const localNav = localStorage.getItem('NAV_DATA');
@@ -6,8 +6,10 @@ const localAbout = localStorage.getItem('ABOUT_DATA');
 const localHero = localStorage.getItem('HERO_DATA');
 const localRelease = localStorage.getItem('RELEASE_DATA');
 const localWorks = localStorage.getItem('WORKS_DATA');
+const localActivities = localStorage.getItem('ACTIVITIES_DATA');
 
 let currentWorks = localWorks ? JSON.parse(localWorks) : [...WORKS_DATA];
+let currentActivities = localActivities ? JSON.parse(localActivities) : [...ACTIVITIES_DATA];
 let currentMenus = localNav ? JSON.parse(localNav) : [...NAV_DATA];
 let persistentAbout = localAbout ? JSON.parse(localAbout) : { ...ABOUT_DATA };
 let persistentHero = localHero ? JSON.parse(localHero) : { ...HERO_DATA };
@@ -48,6 +50,7 @@ function init() {
   document.getElementById('about-body').value = persistentAbout.body.join('\n');
 
   renderWorksList();
+  renderActivitiesList();
   renderMenuList();
 }
 
@@ -78,6 +81,20 @@ function renderWorksList() {
           <div class="form-group"><label>링크</label><input type="text" value="${w.link}" onchange="updateWork(${i}, 'link', this.value)"></div>
         </div>
       </div>
+    </div>
+  `).join('');
+}
+
+function renderActivitiesList() {
+  const list = document.getElementById('activities-list');
+  list.innerHTML = currentActivities.map((a, i) => `
+    <div class="item-card">
+      <button class="btn-del" onclick="deleteActivity(${i})">삭제</button>
+      <h2>활동 #${currentActivities.length - i}</h2>
+      <div class="form-group"><label>기간 (Period)</label><input type="text" value="${a.period}" onchange="updateActivity(${i}, 'period', this.value)"></div>
+      <div class="form-group"><label>활동명 (Name)</label><input type="text" value="${a.name}" onchange="updateActivity(${i}, 'name', this.value)"></div>
+      <div class="form-group"><label>설명 (Description)</label><textarea onchange="updateActivity(${i}, 'desc', this.value)" rows="3">${a.desc}</textarea></div>
+      <div class="form-group"><label>수상/기타 (Award/Note)</label><input type="text" value="${a.award || ''}" onchange="updateActivity(${i}, 'award', this.value)"></div>
     </div>
   `).join('');
 }
@@ -139,6 +156,10 @@ window.updateWork = (i, field, val) => currentWorks[i][field] = val;
 window.deleteWork = (i) => { if(confirm('이 앨범을 삭제하시겠습니까?')) { currentWorks.splice(i, 1); renderWorksList(); } };
 window.addWork = () => { currentWorks.unshift({ year: new Date().getFullYear().toString(), genre: "", title: "새 앨범", desc: "", credit: "", link: "", image: "" }); renderWorksList(); };
 
+window.updateActivity = (i, field, val) => currentActivities[i][field] = val;
+window.deleteActivity = (i) => { if(confirm('이 활동을 삭제하시겠습니까?')) { currentActivities.splice(i, 1); renderActivitiesList(); } };
+window.addActivity = () => { currentActivities.unshift({ period: "2026", name: "새 활동", desc: "", award: "" }); renderActivitiesList(); };
+
 window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
 window.deleteMenu = (i) => { if(confirm('이 메뉴 항목을 삭제하시겠습니까?')) { currentMenus.splice(i, 1); renderMenuList(); } };
 window.addMenu = () => { currentMenus.push({ name: "새 메뉴", desc: "", target: "home", url: "", active: true }); renderMenuList(); };
@@ -172,6 +193,12 @@ window.saveWorks = () => {
   localStorage.setItem('WORKS_DATA', JSON.stringify(currentWorks));
   console.log('Works 데이터:', currentWorks);
   alert('Works 데이터가 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+};
+
+window.saveActivities = () => {
+  localStorage.setItem('ACTIVITIES_DATA', JSON.stringify(currentActivities));
+  console.log('Activities 데이터:', currentActivities);
+  alert('활동 데이터가 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
 };
 
 window.saveMenu = () => {

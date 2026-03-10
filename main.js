@@ -8,12 +8,14 @@ const localAbout = localStorage.getItem('ABOUT_DATA');
 const localHero = localStorage.getItem('HERO_DATA');
 const localRelease = localStorage.getItem('RELEASE_DATA');
 const localWorks = localStorage.getItem('WORKS_DATA');
+const localActivities = localStorage.getItem('ACTIVITIES_DATA');
 
 const finalNav = localNav ? JSON.parse(localNav) : NAV_DATA;
 const finalAbout = localAbout ? JSON.parse(localAbout) : ABOUT_DATA;
 const finalHero = localHero ? JSON.parse(localHero) : HERO_DATA;
 const finalRelease = localRelease ? JSON.parse(localRelease) : RELEASE_DATA;
 const finalWorks = localWorks ? JSON.parse(localWorks) : WORKS_DATA;
+const finalActivities = localActivities ? JSON.parse(localActivities) : ACTIVITIES_DATA;
 
 function renderNav() {
   const nav = document.getElementById('main-nav');
@@ -100,7 +102,7 @@ function renderWorks() {
     </div>
   `).join('');
 
-  const activitiesHtml = ACTIVITIES_DATA.map(act => `
+  const activitiesHtml = finalActivities.map(act => `
     <div class="act-item">
       <p class="act-period">${act.period}</p>
       <h4 class="act-name">${act.name}</h4>
