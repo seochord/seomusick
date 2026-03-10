@@ -1,6 +1,8 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 
-console.log('Main.js loaded with v1.7 - Menu with Description Support');
+console.log('Main.js loaded with v1.8 - Hero Video Embed');
+
+const YT_API_KEY = 'AIzaSyBYqSJyNKDjiACL-V74J3GPMr85SD-pXWA';
 
 // --- DATA INITIALIZATION (Prioritize LocalStorage) ---
 const localNav = localStorage.getItem('NAV_DATA');
@@ -67,13 +69,16 @@ function renderHero() {
       </div>`;
   }).join('');
 
-  const titleHtml = finalHero.youtubePlaylistId 
-    ? `<h1 class="h-title"><a href="https://www.youtube.com/playlist?list=${finalHero.youtubePlaylistId}" target="_blank" class="h-title-link">${finalHero.title}</a></h1>`
-    : `<h1 class="h-title">${finalHero.title}</h1>`;
+  const videoHtml = `
+    <div class="h-video-wrap">
+      <div id="yt-player" class="h-video-player"></div>
+      <p id="yt-title" class="h-video-title">Loading Latest Video...</p>
+    </div>
+  `;
 
   heroSection.innerHTML = `
     <p class="h-eye">${finalHero.eye}</p>
-    ${titleHtml}
+    ${videoHtml}
     <div class="h-brand">
       <p class="hb-en">${finalHero.slogan ? finalHero.slogan.en : ''}</p>
       <p class="hb-ko">${finalHero.slogan ? finalHero.slogan.ko : ''}</p>
@@ -83,6 +88,51 @@ function renderHero() {
       ${ctaHtml}
     </div>
   `;
+
+  if (finalHero.youtubePlaylistId) {
+    loadLatestVideo(finalHero.youtubePlaylistId);
+  }
+}
+
+async function loadLatestVideo(playlistLink) {
+  // Extract ID if full URL is provided
+  let playlistId = playlistLink;
+  if (playlistLink.includes('list=')) {
+    playlistId = playlistLink.split('list=')[1].split('&')[0];
+  }
+
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems`
+            + `?part=snippet&maxResults=1&playlistId=${playlistId}&key=${YT_API_KEY}`;
+
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (!data.items || !data.items.length) {
+      const titleEl = document.getElementById('yt-title');
+      if (titleEl) titleEl.textContent = "No videos found.";
+      return;
+    }
+
+    const videoId = data.items[0].snippet.resourceId.videoId;
+    const title   = data.items[0].snippet.title;
+
+    const titleEl = document.getElementById('yt-title');
+    const playerEl = document.getElementById('yt-player');
+
+    if (titleEl) titleEl.textContent = title;
+    if (playerEl) {
+      playerEl.innerHTML = `
+        <iframe
+          src="https://www.youtube.com/embed/${videoId}"
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+  } catch (err) {
+    console.error("YouTube API Error:", err);
+    const titleEl = document.getElementById('yt-title');
+    if (titleEl) titleEl.textContent = "Failed to load video.";
+  }
 }
 
 function renderWorks() {
