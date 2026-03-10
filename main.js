@@ -102,7 +102,14 @@ function renderWorks() {
     </div>
   `).join('');
 
-  const activitiesHtml = finalActivities.map(act => `
+  // Sort activities by year descending
+  const sortedActivities = [...finalActivities].sort((a, b) => {
+    const yearA = parseInt(a.period.match(/\d{4}/)?.[0] || 0);
+    const yearB = parseInt(b.period.match(/\d{4}/)?.[0] || 0);
+    return yearB - yearA;
+  });
+
+  const activitiesHtml = sortedActivities.map(act => `
     <div class="act-item">
       <p class="act-period">${act.period}</p>
       <h4 class="act-name">${act.name}</h4>

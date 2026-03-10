@@ -196,9 +196,16 @@ window.saveWorks = () => {
 };
 
 window.saveActivities = () => {
+  // Sort by year descending before saving
+  currentActivities.sort((a, b) => {
+    const yearA = parseInt(a.period.match(/\d{4}/)?.[0] || 0);
+    const yearB = parseInt(b.period.match(/\d{4}/)?.[0] || 0);
+    return yearB - yearA;
+  });
   localStorage.setItem('ACTIVITIES_DATA', JSON.stringify(currentActivities));
   console.log('Activities 데이터:', currentActivities);
-  alert('활동 데이터가 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+  alert('활동 데이터가 정렬되어 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+  renderActivitiesList();
 };
 
 window.saveMenu = () => {
