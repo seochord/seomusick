@@ -8,6 +8,15 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 - **Admin Slogan Control**: Added management for both English and Korean slogans in the Admin panel.
 - **Full Persistence**: Admin changes to Hero (Eye Catch, Title, Slogan EN/KO) are saved to `localStorage` and reflected on the home screen.
 
+## Visual Design & Branding
+### Ocean & Harbor Palette (Inspired by `about.jpeg`)
+- **Primary Color**: `#335C81` (Deep Harbor Blue) - Used for logos, primary headers, and active states.
+- **Secondary Color**: `#5891AD` (Sky Blue) - Used for secondary elements and hover states.
+- **Accent Color**: `#E9C46A` (Harbor Yellow) - Used for subtle highlights and call-to-action accents.
+- **Muted Color**: `#64748B` (Cool Slate Gray) - Used for descriptions and less prominent text.
+- **Backgrounds**: `#FFFFFF` (Pure White) and `#F8FAFC` (Cool Off-white/Gray) to maintain a clean, modern feel.
+- **Borders**: `rgba(51, 92, 129, 0.12)` - Soft blue-tinted borders for subtle separation.
+
 ## Current Status
 - Single-page application (SPA) architecture with hash-based section navigation.
 - Content is fully data-driven using `data.js` and supports session-based persistence via `localStorage` for all sections.

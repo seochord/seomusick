@@ -9,13 +9,14 @@
 <style>
 :root {
   --bg: #ffffff; 
-  --bg2: #fcfaf7; 
+  --bg2: #f8fafc; 
   --sw: 280px;
-  --cream: #1a1a18; 
-  --gold: #8d734a;  
-  --gold-light: #b59a7a;
-  --muted: #7a7268;
-  --border: rgba(141,115,74,0.15);
+  --cream: #1e293b; 
+  --gold: #335c81;  /* Harbor Blue */
+  --gold-light: #5891ad; /* Sky Blue */
+  --muted: #64748b;
+  --border: rgba(51, 92, 129, 0.12);
+  --accent: #e9c46a; /* Harbor Yellow */
   
   /* MODERN CLASSIC FONTS */
   --f-head: 'Playfair Display', serif;
@@ -57,7 +58,7 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 .s-social a:hover { color:var(--gold); transform:translateY(-2px); }
 .s-social svg { width:18px; height:18px; fill:currentColor; }
 
-.s-player { margin-top:24px; padding:20px; background:rgba(141,115,74,0.03); border:1px solid var(--border); border-radius:12px; }
+.s-player { margin-top:24px; padding:20px; background:rgba(51, 92, 129, 0.04); border:1px solid var(--border); border-radius:12px; }
 .sp-label { font-family:var(--f-ui); font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; display:block; font-weight:600; }
 .sp-title { font-family:var(--f-head); font-size:16px; color:var(--cream); margin-bottom:6px; font-weight: 600; }
 .sp-desc { font-family:var(--f-body); font-size:11px; color:var(--muted); margin-bottom:14px; }
@@ -88,7 +89,7 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 }
 .hero::before {
   content:''; position:absolute; inset:0; pointer-events:none;
-  background: radial-gradient(ellipse 70% 60% at 65% 40%, rgba(141,115,74,0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 60% at 65% 40%, rgba(51, 92, 129, 0.08) 0%, transparent 70%);
 }
 .h-eye { font-family:var(--f-ui); font-size:11px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; opacity:0; animation:fadeUp 1s 0.2s forwards; font-weight:500; }
 .h-title { font-family:var(--f-head); font-size:clamp(40px,6vw,84px); font-weight:700; line-height:1.15; letter-spacing:0.01em; color:var(--cream); margin-bottom:48px; opacity:0; animation:fadeUp 1s 0.4s forwards; max-width: 900px; }
@@ -128,12 +129,12 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 
 /* ALBUMS */
 .album-item { display:grid; grid-template-columns:100px 1fr auto; gap:32px; padding:32px 0; border-bottom:1px solid var(--border); align-items:start; cursor:pointer; transition:all 0.3s ease; }
-.album-item:hover { background:rgba(141,115,74,0.02); transform:translateX(8px); }
-.a-year { font-family:var(--f-head); font-size:36px; font-weight:600; color:rgba(141,115,74,0.3); line-height:1; }
+.album-item:hover { background:rgba(51, 92, 129, 0.03); transform:translateX(8px); }
+.a-year { font-family:var(--f-head); font-size:36px; font-weight:600; color:rgba(51, 92, 129, 0.2); line-height:1; }
 .a-genre { display:inline-block; font-family:var(--f-ui); font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); border:1px solid var(--border); padding:4px 12px; margin-top:8px; font-weight:500; border-radius:4px; }
 .a-title { font-family:var(--f-head); font-size:26px; color:var(--cream); margin-bottom:10px; line-height:1.2; font-weight: 600; }
 .a-desc { font-family:var(--f-body); font-size:15px; line-height:1.9; color:var(--muted); margin-bottom:8px; max-width:520px; font-weight: 400; }
-.a-credit { font-family:var(--f-body); font-size:12px; color:rgba(122,114,104,0.6); font-style: italic; }
+.a-credit { font-family:var(--f-body); font-size:12px; color:rgba(100, 116, 139, 0.6); font-style: italic; }
 .a-link { font-family:var(--f-ui); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:2px; white-space:nowrap; transition:all 0.3s; margin-top:6px; display:inline-block; font-weight:500; }
 .a-link:hover { border-color:var(--gold); }
 
@@ -153,12 +154,12 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 /* ABOUT */
 .about-image { margin-bottom:60px; max-width:600px; }
 .about-image img { width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:12px; }
-.about-verse { margin-bottom:60px; padding:48px; border:1px solid var(--border); background:rgba(141,115,74,0.03); max-width:600px; border-radius:12px; }
+.about-verse { margin-bottom:60px; padding:48px; border:1px solid var(--border); background:rgba(51, 92, 129, 0.04); max-width:600px; border-radius:12px; }
 .v-text { font-family:var(--f-head); font-size:26px; font-style:italic; font-weight:400; color:var(--cream); line-height:1.7; margin-bottom:14px; }
 .v-ref { font-family:var(--f-ui); font-size:11px; letter-spacing:0.15em; color:var(--gold); font-weight:500; text-transform: uppercase; }
 .about-id { display:flex; gap:16px; margin-bottom:60px; flex-wrap:wrap; }
 .id-item { display:flex; gap:12px; align-items:center; padding:16px 24px; border:1px solid var(--border); transition:all 0.3s; border-radius:8px; }
-.id-item:hover { background:rgba(141,115,74,0.05); }
+.id-item:hover { background:rgba(51, 92, 129, 0.06); }
 .id-icon { font-size:18px; }
 .id-label { font-family:var(--f-ui); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); font-weight:500; }
 .about-body { max-width:640px; margin-bottom:60px; }
@@ -174,8 +175,8 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
   background: #ffffff; /* 블로그 본래의 배경색인 흰색으로 변경 */
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(141,115,74,0.25); /* 테두리를 조금 더 명확하게 */
-  box-shadow: 0 15px 50px rgba(0,0,0,0.05); /* 깊이감을 주는 부드러운 그림자 */
+  border: 1px solid rgba(51, 92, 129, 0.2); /* 테두리를 테마색에 맞춰 변경 */
+  box-shadow: 0 15px 50px rgba(51, 92, 129, 0.08); /* 그림자에 미세한 테마색 반영 */
 }
 .blog-frame {
   width: 100%;
