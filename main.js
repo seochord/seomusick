@@ -2,7 +2,7 @@ import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DA
 
 console.log('Main.js loaded with v1.8 - Hero Video Embed');
 
-const YT_API_KEY = 'AIzaSyBYqSJyNKDjiACL-V74J3GPMr85SD-pXWA';
+const YT_API_KEY = '';
 
 // --- DATA INITIALIZATION (Prioritize LocalStorage) ---
 const localNav = localStorage.getItem('NAV_DATA');
