@@ -97,7 +97,6 @@ function renderWorks() {
         <p class="a-desc">${album.desc}</p>
         <p class="a-credit">${album.credit}</p>
       </div>
-      <a href="${album.link}" class="a-link" target="_blank" onclick="event.stopPropagation()">Listen →</a>
     </div>
   `).join('');
 
