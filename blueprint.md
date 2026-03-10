@@ -5,8 +5,9 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 
 ### Hero Layout Reversion & Slogan Management
 - **Hero Design**: Reverted to the classic layout where "SEO MUSICK" is the primary title and the slogan is the subtitle. This restores the artist's brand identity while maintaining the mission statement.
-- **Admin Slogan Control**: Added management for both English and Korean slogans in the Admin panel.
-- **Full Persistence**: Admin changes to Hero (Eye Catch, Title, Slogan EN/KO) are saved to `localStorage` and reflected on the home screen.
+- **YouTube Integration**: The "SEO MUSICK" title on the home screen is now clickable and links to a YouTube playlist.
+- **Admin Slogan & YouTube Control**: Added management for both English and Korean slogans, and the YouTube Playlist ID in the Admin panel.
+- **Full Persistence**: Admin changes to Hero (Eye Catch, Title, Slogan EN/KO, YouTube Playlist ID) are saved to `localStorage` and reflected on the home screen.
 
 ## Visual Design & Branding
 ### Ocean & Harbor Palette (Inspired by `about.jpeg`)

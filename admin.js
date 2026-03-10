@@ -38,6 +38,7 @@ function init() {
   document.getElementById('hero-title').value = persistentHero.title;
   document.getElementById('hero-slogan-en').value = persistentHero.slogan ? persistentHero.slogan.en : '';
   document.getElementById('hero-slogan-ko').value = persistentHero.slogan ? persistentHero.slogan.ko : '';
+  document.getElementById('hero-youtube').value = persistentHero.youtubePlaylistId || '';
 
   // Load Release
   document.getElementById('rel-title').value = persistentRelease.title;
@@ -171,7 +172,8 @@ window.saveHero = () => {
     slogan: {
       en: document.getElementById('hero-slogan-en').value,
       ko: document.getElementById('hero-slogan-ko').value
-    }
+    },
+    youtubePlaylistId: document.getElementById('hero-youtube').value
   };
   localStorage.setItem('HERO_DATA', JSON.stringify(data));
   console.log('Hero 데이터:', data);

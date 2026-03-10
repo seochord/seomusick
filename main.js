@@ -67,9 +67,13 @@ function renderHero() {
       </div>`;
   }).join('');
 
+  const titleHtml = finalHero.youtubePlaylistId 
+    ? `<h1 class="h-title"><a href="https://www.youtube.com/playlist?list=${finalHero.youtubePlaylistId}" target="_blank" class="h-title-link">${finalHero.title}</a></h1>`
+    : `<h1 class="h-title">${finalHero.title}</h1>`;
+
   heroSection.innerHTML = `
     <p class="h-eye">${finalHero.eye}</p>
-    <h1 class="h-title">${finalHero.title}</h1>
+    ${titleHtml}
     <div class="h-brand">
       <p class="hb-en">${finalHero.slogan ? finalHero.slogan.en : ''}</p>
       <p class="hb-ko">${finalHero.slogan ? finalHero.slogan.ko : ''}</p>
