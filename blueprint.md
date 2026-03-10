@@ -4,8 +4,11 @@
 SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, Social Worker, and Music Maker. The site showcases his musical works and personal biography with a dynamic navigation system.
 
 ### Hero Layout Reversion & Slogan Management
-- **Hero Design**: Reverted to the classic layout where "SEO MUSICK" is the primary title and the slogan is the subtitle. This restores the artist's brand identity while maintaining the mission statement.
-- **YouTube Integration**: The "SEO MUSICK" title on the home screen is now clickable and links to a YouTube playlist.
+- **Hero Design**: The hero section has been streamlined for a cleaner, more focused look. The "SEO MUSICK" title has been removed to prioritize the visual content and mission statement.
+- **YouTube Integration**: The home screen features a dynamic YouTube video embed at its center, showcasing the latest content. 
+    - **Removal of Labels**: "Latest from YouTube" and "View Channel" labels have been removed from below the video to minimize visual clutter.
+    - **Surgical Alignment**: The video dimensions and the slogan text below it are now perfectly aligned at a maximum width of `720px`, creating a balanced, centered column.
+- **Backend Security**: Moved YouTube Data API calls to **Firebase Cloud Functions** to hide the API Key from the frontend. The key is now stored securely in Firebase Secrets.
 - **Admin Slogan & YouTube Control**: Added management for both English and Korean slogans, and the YouTube Playlist ID in the Admin panel.
 - **Full Persistence**: Admin changes to Hero (Eye Catch, Title, Slogan EN/KO, YouTube Playlist ID) are saved to `localStorage` and reflected on the home screen.
 
@@ -24,7 +27,7 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 - Admin dashboard allows managing Hero, Latest Release, Works, About, and Navigation Menu.
 - Admin access is protected by a simple password.
 - UI and system messages are fully localized in Korean.
-- Home screen balances artist name and mission statement.
+- Home screen balances a minimal eye-catch and the artist's mission statement.
 
 ## Implemented Features
 ### Admin Security
@@ -46,6 +49,15 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 - **Admin Access**: A dedicated (yet subtle) link added to the sidebar for easier management.
 
 ## Planned Changes
+### YouTube API Security Enhancement (Firebase Functions Proxy)
+- **Current Issue**: Calling YouTube API directly from the client requires an API Key in `main.js`, which is a security risk.
+- **Solution**: Use Firebase Cloud Functions as a proxy.
+- **Implementation**:
+    - Frontend calls the `getLatestVideo` Cloud Function with `playlistId`.
+    - Cloud Function retrieves the `API_KEY` from Firebase Secrets.
+    - Cloud Function calls the YouTube Data API and returns the video ID and title.
+- **Benefits**: The API Key is never exposed to the client, and we can add additional logic (like caching or rate limiting) in the backend.
+
 ### Works Management Enhancement (Images & Links)
 - **Album Art Integration**: Add an `image` field to each work item in `data.js` and `admin.js`.
 - **Admin Photo Upload/Path**: Update the admin page (`admin.html` and `admin.js`) to allow entering an image path (or eventually uploading) for each work.

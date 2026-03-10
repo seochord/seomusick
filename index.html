@@ -99,7 +99,7 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
   content:''; position:absolute; inset:0; pointer-events:none;
   background: radial-gradient(ellipse 70% 60% at 65% 40%, rgba(51, 92, 129, 0.08) 0%, transparent 70%);
 }
-.h-eye { font-family:var(--f-ui); font-size:11px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; opacity:0; animation:fadeUp 1s 0.2s forwards; font-weight:500; }
+.h-eye { font-family:var(--f-ui); font-size:11px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; opacity:0; animation:fadeUp 1s 0.2s forwards; font-weight:500; max-width: 720px; }
 .h-title { font-family:var(--f-head); font-size:clamp(40px,6vw,84px); font-weight:700; line-height:1.15; letter-spacing:0.01em; color:var(--cream); margin-bottom:48px; opacity:0; animation:fadeUp 1s 0.4s forwards; max-width: 900px; }
 .h-title em { font-style:italic; color:var(--gold); font-family: var(--f-head); font-weight: 400; }
 .h-title-link { text-decoration: none; color: inherit; transition: all 0.4s ease; display: inline-block; }
@@ -108,17 +108,54 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 
 /* HERO VIDEO */
 .h-video-wrap { 
-  max-width: 800px; width: 100%; margin-bottom: 48px; 
+  max-width: 720px; width: 100%; margin-bottom: 52px; 
   opacity: 0; animation: fadeUp 1s 0.4s forwards;
 }
 .h-video-player { 
   position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
-  border-radius: 12px; background: #000; box-shadow: 0 20px 50px rgba(51, 92, 129, 0.15);
+  border-radius: 16px; background: #000; 
+  box-shadow: 0 30px 60px rgba(51, 92, 129, 0.18);
+  border: 1px solid var(--border);
 }
-.h-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-.h-video-title { margin-top: 16px; font-family: var(--f-ui); font-size: 13px; color: var(--muted); letter-spacing: 0.05em; }
+.h-video-player iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 2; }
 
-.h-brand { margin-bottom:60px; opacity:0; animation:fadeUp 1s 0.6s forwards; }
+/* Video Loading Skeleton */
+.h-video-player::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #1e293b 25%, #2a3b52 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.h-video-info { 
+  margin-top: 20px; display: flex; justify-content: space-between; align-items: center;
+  padding: 0 4px;
+}
+.h-video-title { 
+  font-family: var(--f-ui); font-size: 13px; color: var(--gold); 
+  letter-spacing: 0.05em; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+}
+.h-video-title::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; 
+  background: var(--accent); border-radius: 50%;
+}
+.h-video-more {
+  font-family: var(--f-ui); font-size: 11px; color: var(--muted);
+  text-decoration: none; border-bottom: 1px solid transparent;
+  transition: all 0.3s; padding-bottom: 2px;
+}
+.h-video-more:hover { color: var(--gold); border-color: var(--gold); }
+
+.h-brand { margin-bottom:60px; opacity:0; animation:fadeUp 1s 0.6s forwards; max-width: 720px; }
 .hb-en { 
   font-family:var(--f-head); font-style:italic; font-size:12px; color:var(--gold); 
   margin-bottom:16px; letter-spacing:0.25em; font-weight:400; text-transform: uppercase;
@@ -316,6 +353,9 @@ body { background:var(--bg); color:var(--cream); font-family:var(--f-body); disp
 
 </main>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-functions-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script type="module" src="main.js?v=1.3"></script>
 </body>
 </html>

@@ -1,6 +1,13 @@
 import { HERO_DATA, WORKS_DATA, NAV_DATA, ABOUT_DATA, RELEASE_DATA, ACTIVITIES_DATA } from './data.js';
+import { firebaseConfig } from './firebase-config.js';
 
-// --- DATA INITIALIZATION (Prioritize LocalStorage for session persistence) ---
+// --- FIREBASE INITIALIZATION ---
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+// --- DATA INITIALIZATION (Prioritize LocalStorage, then Firestore, then data.js) ---
 const localNav = localStorage.getItem('NAV_DATA');
 const localAbout = localStorage.getItem('ABOUT_DATA');
 const localHero = localStorage.getItem('HERO_DATA');
@@ -30,9 +37,30 @@ function checkAuth() {
   }
 }
 
-function init() {
-  checkAuth();
+async function fetchFromFirestore() {
+  try {
+    const doc = await db.collection('settings').doc('site_data').get();
+    if (doc.exists) {
+      const data = doc.data();
+      if (data.WORKS_DATA) currentWorks = data.WORKS_DATA;
+      if (data.ACTIVITIES_DATA) currentActivities = data.ACTIVITIES_DATA;
+      if (data.NAV_DATA) currentMenus = data.NAV_DATA;
+      if (data.ABOUT_DATA) persistentAbout = data.ABOUT_DATA;
+      if (data.HERO_DATA) persistentHero = data.HERO_DATA;
+      if (data.RELEASE_DATA) persistentRelease = data.RELEASE_DATA;
+      
+      // Update UI with Firestore data
+      updateUI();
+    } else {
+      console.log("Firestore에 데이터가 없습니다. 초기 데이터를 업로드합니다.");
+      await saveToFirestore(); // Upload default data
+    }
+  } catch (err) {
+    console.error("Firestore 로딩 실패:", err);
+  }
+}
 
+function updateUI() {
   // Load Hero
   document.getElementById('hero-eye').value = persistentHero.eye;
   document.getElementById('hero-title').value = persistentHero.title;
@@ -53,6 +81,30 @@ function init() {
   renderWorksList();
   renderActivitiesList();
   renderMenuList();
+}
+
+async function saveToFirestore() {
+  try {
+    await db.collection('settings').doc('site_data').set({
+      HERO_DATA: persistentHero,
+      RELEASE_DATA: persistentRelease,
+      WORKS_DATA: currentWorks,
+      ACTIVITIES_DATA: currentActivities,
+      ABOUT_DATA: persistentAbout,
+      NAV_DATA: currentMenus,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    console.log("Firestore 저장 성공!");
+  } catch (err) {
+    console.error("Firestore 저장 실패:", err);
+    alert("서버 저장에 실패했습니다. 권한 설정을 확인해주세요.");
+  }
+}
+
+function init() {
+  checkAuth();
+  updateUI();
+  fetchFromFirestore(); // Try fetching real-time data
 }
 
 function renderWorksList() {
@@ -165,66 +217,87 @@ window.updateMenu = (i, field, val) => currentMenus[i][field] = val;
 window.deleteMenu = (i) => { if(confirm('이 메뉴 항목을 삭제하시겠습니까?')) { currentMenus.splice(i, 1); renderMenuList(); } };
 window.addMenu = () => { currentMenus.push({ name: "새 메뉴", desc: "", target: "home", url: "", active: true }); renderMenuList(); };
 
-window.saveHero = () => {
-  const data = {
+const extractPlaylistId = (input) => {
+  if (input.includes('list=')) {
+    return input.split('list=')[1].split('&')[0];
+  }
+  return input.trim();
+};
+
+window.testYoutube = () => {
+  const input = document.getElementById('hero-youtube').value;
+  const id = extractPlaylistId(input);
+  const msg = document.getElementById('yt-test-msg');
+  
+  if (!id) {
+    msg.innerHTML = "ID를 입력해주세요.";
+    return;
+  }
+  
+  msg.innerHTML = `검증된 ID: <strong>${id}</strong> (저장 후 메인 페이지에서 확인 가능)`;
+  msg.style.color = "var(--gold)";
+};
+
+window.saveHero = async () => {
+  const ytInput = document.getElementById('hero-youtube').value;
+  persistentHero = {
     eye: document.getElementById('hero-eye').value,
     title: document.getElementById('hero-title').value,
     slogan: {
       en: document.getElementById('hero-slogan-en').value,
       ko: document.getElementById('hero-slogan-ko').value
     },
-    youtubePlaylistId: document.getElementById('hero-youtube').value
+    youtubePlaylistId: extractPlaylistId(ytInput)
   };
-  localStorage.setItem('HERO_DATA', JSON.stringify(data));
-  console.log('Hero 데이터:', data);
-  alert('Hero 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+  localStorage.setItem('HERO_DATA', JSON.stringify(persistentHero));
+  await saveToFirestore();
+  alert('Hero 섹션이 서버에 저장되었습니다!');
 };
 
-window.saveRelease = () => {
-  const data = {
+window.saveRelease = async () => {
+  persistentRelease = {
     title: document.getElementById('rel-title').value,
     desc: document.getElementById('rel-desc').value,
     link: document.getElementById('rel-link').value
   };
-  localStorage.setItem('RELEASE_DATA', JSON.stringify(data));
-  console.log('최신 발매 데이터:', data);
-  alert('최신 발매 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+  localStorage.setItem('RELEASE_DATA', JSON.stringify(persistentRelease));
+  await saveToFirestore();
+  alert('최신 발매 섹션이 서버에 저장되었습니다!');
 };
 
-window.saveWorks = () => {
+window.saveWorks = async () => {
   localStorage.setItem('WORKS_DATA', JSON.stringify(currentWorks));
-  console.log('Works 데이터:', currentWorks);
-  alert('Works 데이터가 미리보기에 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+  await saveToFirestore();
+  alert('Works 데이터가 서버에 저장되었습니다!');
 };
 
-window.saveActivities = () => {
-  // Sort by year descending before saving
+window.saveActivities = async () => {
   currentActivities.sort((a, b) => {
     const yearA = parseInt(a.period.match(/\d{4}/)?.[0] || 0);
     const yearB = parseInt(b.period.match(/\d{4}/)?.[0] || 0);
     return yearB - yearA;
   });
   localStorage.setItem('ACTIVITIES_DATA', JSON.stringify(currentActivities));
-  console.log('Activities 데이터:', currentActivities);
-  alert('활동 데이터가 정렬되어 저장되었습니다! 메인 사이트에서 확인 가능합니다.');
+  await saveToFirestore();
+  alert('활동 데이터가 서버에 저장되었습니다!');
   renderActivitiesList();
 };
 
-window.saveMenu = () => {
+window.saveMenu = async () => {
   localStorage.setItem('NAV_DATA', JSON.stringify(currentMenus));
-  console.log('메뉴 데이터:', currentMenus);
-  alert('메뉴가 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다.');
+  await saveToFirestore();
+  alert('메뉴가 서버에 저장되었습니다!');
 };
 
-window.saveAbout = () => {
-  const data = {
+window.saveAbout = async () => {
+  persistentAbout = {
     verse: document.getElementById('about-verse').value,
     verseRef: document.getElementById('about-ref').value,
     body: document.getElementById('about-body').value.split('\n').filter(p => p.trim())
   };
-  localStorage.setItem('ABOUT_DATA', JSON.stringify(data));
-  console.log('About 데이터:', data);
-  alert('About 섹션이 미리보기에 저장되었습니다! 메인 사이트에서 변경 사항을 확인할 수 있습니다.');
+  localStorage.setItem('ABOUT_DATA', JSON.stringify(persistentAbout));
+  await saveToFirestore();
+  alert('About 섹션이 서버에 저장되었습니다!');
 };
 
 document.addEventListener('DOMContentLoaded', init);

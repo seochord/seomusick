@@ -3,7 +3,7 @@ export const HERO_DATA = {
   title: "SEO<br><em>MUSICK</em>",
   slogan: {
     en: "Music of Faith for the Broken",
-    ko: "부서진 이들에게,<br> 믿음으로 건네는 음악."
+    ko: "부서진 이들에게, 믿음으로 건네는 음악."
   },
   pillars: [
     { en: "BIBLE BELIEVER", ko: "성경 신자" },
@@ -15,11 +15,11 @@ export const HERO_DATA = {
 
 export const SOCIAL_DATA = {
   youtube: "https://www.youtube.com/@seomusick",
-  instagram: "https://www.instagram.com/seomusick/" // Replace with your actual Instagram ID if different
+  instagram: "https://www.instagram.com/seomusick/", // Replace with your actual Instagram ID if different
+  tiktok: "https://www.tiktok.com/@seomusick"
 };
 
 export const WORKS_DATA = [
-  { year: "2025", genre: "Piano · Vocal", title: "겨울편지", desc: "피아노와 보컬의 쓸쓸함에 해금의 울림이 더해져 깊은 여운을 남기는 겨울의 서정곡.", credit: "Lyric & Composed & Arranged by 서의승 · Heagum by 이다정", link: "https://www.submithub.com/link/letter-from-winter", image: "" },
   { year: "2025", genre: "Compilation", title: "A Time to Comfort", desc: "그동안 발표해온 피아노 연주곡들을 모아 담은 컴필레이션. 위로를 주는 음악을 만들자는 다짐의 결실.", credit: "All Composed & Arranged & Piano by 서의승", link: "https://www.submithub.com/link/a-time-to-comfort", image: "images/timetocomfort.jpg" },
   { year: "2025", genre: "Piano", title: "Chapter 3: Come Back", desc: "헤어진 연인들을 위한 곡. Come Back / Give Me Your Peace / Sunset 수록.", credit: "Composed & Arranged by 서의승", link: "https://www.submithub.com/link/chapter-3-come-back", image: "images/chapter3.jpg" },
   { year: "2024", genre: "Piano", title: "Chapter 2: Eternal Love", desc: "새로운 만남, 영원한 사랑. Nice to meet you / A path together / Bellis Perennis / My God 수록.", credit: "All Music Produced by 서의승", link: "https://www.submithub.com/link/chapter-2-eternal-love", image: "images/chapter2.jpg" },
@@ -37,7 +37,7 @@ export const ACTIVITIES_DATA = [
   { period: "2012 – 2014", name: "실로암시각장애인복지관", desc: "음악점역, 프로그램 운영, 음악 레슨, 음악회" },
   { period: "2009", name: "국악그룹 '늘솜'", desc: "작곡, 편곡, 건반", award: "2009 GYMF 장려상, KBS 난장 출연" },
   { period: "2004 – 2006", name: "3사단 군악대", desc: "트럼펫, 사보, 편곡, 밴드, 지휘" },
-  { period: "대학 시절", name: "CCM Band", desc: "Ghost Cure, D- · 작사, 작곡, 건반, 드럼, 노래" }
+  { period: "2002 – 2009", name: "CCM Band & 클래식 활동", desc: "Ghost Cure, D- 활동 · 작사, 작곡, 건반, 드럼, 노래<br>다수의 클래식 공연 참여" }
 ];
 
 export const NAV_DATA = [

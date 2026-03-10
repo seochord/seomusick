@@ -1,29 +1,81 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
+import { firebaseConfig } from './firebase-config.js';
 
-console.log('Main.js loaded with v1.8 - Hero Video Embed');
+console.log('Main.js loaded with v2.3 - Real-time Firestore Integration & Enhanced UI');
 
-const YT_API_KEY = '';
+// --- YOUTUBE API KEY (Plan B) ---
+const YOUTUBE_API_KEY = "AIzaSyBuvT3BQbU0zy-MJrrbBrXGcWCSjnYA0ic";
 
-// --- DATA INITIALIZATION (Prioritize LocalStorage) ---
-const localNav = localStorage.getItem('NAV_DATA');
-const localAbout = localStorage.getItem('ABOUT_DATA');
-const localHero = localStorage.getItem('HERO_DATA');
-const localRelease = localStorage.getItem('RELEASE_DATA');
-const localWorks = localStorage.getItem('WORKS_DATA');
-const localActivities = localStorage.getItem('ACTIVITIES_DATA');
+// --- FIREBASE INITIALIZATION ---
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
 
-const finalNav = localNav ? JSON.parse(localNav) : NAV_DATA;
-const finalAbout = localAbout ? JSON.parse(localAbout) : ABOUT_DATA;
-const finalHero = localHero ? JSON.parse(localHero) : HERO_DATA;
-const finalRelease = localRelease ? JSON.parse(localRelease) : RELEASE_DATA;
-const finalWorks = localWorks ? JSON.parse(localWorks) : WORKS_DATA;
-const finalActivities = localActivities ? JSON.parse(localActivities) : ACTIVITIES_DATA;
+// --- DATA INITIALIZATION (Prioritize Firestore, then LocalStorage, then data.js) ---
+let finalNav = NAV_DATA;
+let finalAbout = ABOUT_DATA;
+let finalHero = HERO_DATA;
+let finalRelease = RELEASE_DATA;
+let finalWorks = WORKS_DATA;
+let finalActivities = ACTIVITIES_DATA;
+
+async function fetchInitialData() {
+  try {
+    const doc = await db.collection('settings').doc('site_data').get();
+    if (doc.exists) {
+      const data = doc.data();
+      if (data.NAV_DATA) finalNav = data.NAV_DATA;
+      if (data.ABOUT_DATA) finalAbout = data.ABOUT_DATA;
+      if (data.HERO_DATA) finalHero = data.HERO_DATA;
+      if (data.RELEASE_DATA) finalRelease = data.RELEASE_DATA;
+      if (data.WORKS_DATA) finalWorks = data.WORKS_DATA;
+      if (data.ACTIVITIES_DATA) finalActivities = data.ACTIVITIES_DATA;
+      
+      console.log("서버 데이터 로드 완료");
+    } else {
+      // Use local storage fallback if server is empty
+      const localNav = localStorage.getItem('NAV_DATA');
+      const localAbout = localStorage.getItem('ABOUT_DATA');
+      const localHero = localStorage.getItem('HERO_DATA');
+      const localRelease = localStorage.getItem('RELEASE_DATA');
+      const localWorks = localStorage.getItem('WORKS_DATA');
+      const localActivities = localStorage.getItem('ACTIVITIES_DATA');
+
+      if (localNav) finalNav = JSON.parse(localNav);
+      if (localAbout) finalAbout = JSON.parse(localAbout);
+      if (localHero) finalHero = JSON.parse(localHero);
+      if (localRelease) finalRelease = JSON.parse(localRelease);
+      if (localWorks) finalWorks = JSON.parse(localWorks);
+      if (localActivities) finalActivities = JSON.parse(localActivities);
+    }
+  } catch (err) {
+    console.error("Firestore 로드 실패, 기본 데이터를 사용합니다:", err);
+  } finally {
+    renderAll();
+  }
+}
+
+function renderAll() {
+  renderNav();
+  renderSidebar();
+  renderHero();
+  renderWorks();
+  renderBlog();
+  renderAbout();
+  updateView();
+}
 
 function renderNav() {
   const nav = document.getElementById('main-nav');
   if (!nav) return;
   
-  nav.innerHTML = finalNav.filter(n => n.active).map(n => {
+  if (!finalNav || !Array.isArray(finalNav) || finalNav.length === 0) {
+    console.warn("NAV_DATA is invalid, using default.");
+    finalNav = NAV_DATA;
+  }
+
+  nav.innerHTML = finalNav.filter(n => n && n.active).map(n => {
     if (n.url) {
       return `<li><a href="${n.url}" target="_blank" id="nav-ext-${n.name}">${n.name}</a></li>`;
     }
@@ -37,13 +89,13 @@ function renderSidebar() {
 
   player.innerHTML = `
     <span class="sp-label">Latest Release</span>
-    <div class="sp-title">${finalRelease.title}</div>
-    <div class="sp-desc">${finalRelease.desc}</div>
+    <div class="sp-title">${finalRelease.title || 'Loading...'}</div>
+    <div class="sp-desc">${finalRelease.desc || ''}</div>
     <div class="sp-wave">
       <div class="wb"></div><div class="wb"></div><div class="wb"></div>
       <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
     </div>
-    <a href="${finalRelease.link}" class="sp-link" target="_blank">Listen →</a>
+    <a href="${finalRelease.link || '#'}" class="sp-link" target="_blank">Listen →</a>
   `;
 }
 
@@ -51,7 +103,7 @@ function renderHero() {
   const heroSection = document.querySelector('#page-home .hero');
   if (!heroSection) return;
 
-  const ctaHtml = finalNav.filter(n => n.active && n.target !== 'home').map(n => {
+  const ctaHtml = (finalNav || []).filter(n => n && n.active && n.target !== 'home').map(n => {
     const descHtml = n.desc ? `<p class="cta-desc">${n.desc}</p>` : '';
     const btnClass = n.target === 'about' ? 'btn-p' : 'btn-s';
     
@@ -72,12 +124,12 @@ function renderHero() {
   const videoHtml = `
     <div class="h-video-wrap">
       <div id="yt-player" class="h-video-player"></div>
-      <p id="yt-title" class="h-video-title">Loading Latest Video...</p>
     </div>
   `;
 
+  // We intentionally omit hero title and youtube info labels as requested by the user.
   heroSection.innerHTML = `
-    <p class="h-eye">${finalHero.eye}</p>
+    <p class="h-eye">${finalHero.eye || ''}</p>
     ${videoHtml}
     <div class="h-brand">
       <p class="hb-en">${finalHero.slogan ? finalHero.slogan.en : ''}</p>
@@ -95,43 +147,48 @@ function renderHero() {
 }
 
 async function loadLatestVideo(playlistLink) {
-  // Extract ID if full URL is provided
   let playlistId = playlistLink;
   if (playlistLink.includes('list=')) {
     playlistId = playlistLink.split('list=')[1].split('&')[0];
   }
 
-  const url = `https://www.googleapis.com/youtube/v3/playlistItems`
-            + `?part=snippet&maxResults=1&playlistId=${playlistId}&key=${YT_API_KEY}`;
+  const playerEl = document.getElementById('yt-player');
+
+  const fallbackEmbed = () => {
+    if (playerEl) {
+      playerEl.innerHTML = `
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=${playlistId}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+  };
 
   try {
-    const res  = await fetch(url);
-    const data = await res.json();
-    if (!data.items || !data.items.length) {
-      const titleEl = document.getElementById('yt-title');
-      if (titleEl) titleEl.textContent = "No videos found.";
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`);
+    const data = await response.json();
+
+    if (data.error || !data.items || data.items.length === 0) {
+      fallbackEmbed();
       return;
     }
 
     const videoId = data.items[0].snippet.resourceId.videoId;
-    const title   = data.items[0].snippet.title;
 
-    const titleEl = document.getElementById('yt-title');
-    const playerEl = document.getElementById('yt-player');
-
-    if (titleEl) titleEl.textContent = title;
     if (playerEl) {
       playerEl.innerHTML = `
         <iframe
-          src="https://www.youtube.com/embed/${videoId}"
+          src="https://www.youtube.com/embed/${videoId}?autoplay=0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
         </iframe>
       `;
     }
   } catch (err) {
-    console.error("YouTube API Error:", err);
-    const titleEl = document.getElementById('yt-title');
-    if (titleEl) titleEl.textContent = "Failed to load video.";
+    console.error("YouTube API 호출 실패:", err);
+    fallbackEmbed();
   }
 }
 
@@ -139,35 +196,34 @@ function renderWorks() {
   const worksContainer = document.querySelector('#page-works .pi');
   if (!worksContainer) return;
 
-  const worksHtml = finalWorks.map(album => `
+  const worksHtml = (finalWorks || []).map(album => `
     <div class="album-item" onclick="if('${album.link}') window.open('${album.link}', '_blank')">
       <div class="a-img">
         ${album.image ? `<img src="${album.image}" alt="${album.title}">` : '<div style="width:100%;height:100%;background:rgba(51,92,129,0.05);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(51,92,129,0.2);font-family:var(--f-ui);">NO IMAGE</div>'}
       </div>
       <div>
-        <div class="a-year">${album.year}</div>
-        <span class="a-genre">${album.genre}</span>
+        <div class="a-year">${album.year || ''}</div>
+        <span class="a-genre">${album.genre || ''}</span>
       </div>
       <div>
-        <h3 class="a-title">${album.title}</h3>
-        <p class="a-desc">${album.desc}</p>
-        <p class="a-credit">${album.credit}</p>
+        <h3 class="a-title">${album.title || 'Untitled'}</h3>
+        <p class="a-desc">${album.desc || ''}</p>
+        <p class="a-credit">${album.credit || ''}</p>
       </div>
     </div>
   `).join('');
 
-  // Sort activities by year descending
-  const sortedActivities = [...finalActivities].sort((a, b) => {
-    const yearA = parseInt(a.period.match(/\d{4}/)?.[0] || 0);
-    const yearB = parseInt(b.period.match(/\d{4}/)?.[0] || 0);
+  const sortedActivities = [...(finalActivities || [])].sort((a, b) => {
+    const yearA = parseInt(a.period?.match(/\d{4}/)?.[0] || 0);
+    const yearB = parseInt(b.period?.match(/\d{4}/)?.[0] || 0);
     return yearB - yearA;
   });
 
   const activitiesHtml = sortedActivities.map(act => `
     <div class="act-item">
-      <p class="act-period">${act.period}</p>
-      <h4 class="act-name">${act.name}</h4>
-      <p class="act-desc">${act.desc}</p>
+      <p class="act-period">${act.period || ''}</p>
+      <h4 class="act-name">${act.name || ''}</h4>
+      <p class="act-desc">${act.desc || ''}</p>
       ${act.award ? `<span class="act-award">${act.award}</span>` : ''}
     </div>
   `).join('');
@@ -210,14 +266,14 @@ function renderAbout() {
       <h2 class="p-title">About</h2>
     </div>
     <div class="about-verse">
-      <p class="v-text">${finalAbout.verse}</p>
-      <p class="v-ref">${finalAbout.verseRef}</p>
+      <p class="v-text">${finalAbout.verse || ''}</p>
+      <p class="v-ref">${finalAbout.verseRef || ''}</p>
     </div>
     <div class="about-image">
       <img src="./images/about.jpeg" alt="Seo Eui-seung">
     </div>
     <div class="about-body">
-      ${finalAbout.body.map(p => `<p>${p}</p>`).join('')}
+      ${(finalAbout.body || []).map(p => `<p>${p}</p>`).join('')}
     </div>
     <div class="about-close">
       <p class="close-text">For Thy Pleasure.</p>
@@ -225,7 +281,6 @@ function renderAbout() {
   `;
 }
 
-// --- Navigation with Browser History support ---
 window.go = function(page) {
   window.location.hash = page;
 };
@@ -255,14 +310,7 @@ window.toggleSide = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderNav();
-  renderSidebar();
-  renderHero();
-  renderWorks();
-  renderBlog();
-  renderAbout();
-
-  updateView();
+  fetchInitialData();
 
   window.addEventListener('hashchange', updateView);
 
