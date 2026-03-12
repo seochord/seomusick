@@ -1,16 +1,14 @@
 import { HERO_DATA, WORKS_DATA, ACTIVITIES_DATA, NAV_DATA, ABOUT_DATA, SOCIAL_DATA, RELEASE_DATA } from './data.js';
 import { firebaseConfig } from './firebase-config.js';
 
-console.log('Main.js loaded with v2.3 - Real-time Firestore Integration & Enhanced UI');
-
-// --- YOUTUBE API KEY (Plan B) ---
-const YOUTUBE_API_KEY = "";
+console.log('Main.js loaded with v2.4 - Secured YouTube API via Cloud Functions');
 
 // --- FIREBASE INITIALIZATION ---
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 const db = firebase.firestore();
+const functions = firebase.functions();
 
 // --- DATA INITIALIZATION (Prioritize Firestore, then LocalStorage, then data.js) ---
 let finalNav = NAV_DATA;
@@ -167,27 +165,25 @@ async function loadLatestVideo(playlistLink) {
   };
 
   try {
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`);
-    const data = await response.json();
-
-    if (data.error || !data.items || data.items.length === 0) {
+    // SECURITY FIX: Calling Firebase Cloud Function instead of direct YouTube API with a key
+    const getLatestVideo = functions.httpsCallable('getLatestVideo');
+    const result = await getLatestVideo({ playlistId: playlistId });
+    
+    if (result.data && result.data.videoId) {
+      if (playerEl) {
+        playerEl.innerHTML = `
+          <iframe
+            src="https://www.youtube.com/embed/${result.data.videoId}?autoplay=0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        `;
+      }
+    } else {
       fallbackEmbed();
-      return;
-    }
-
-    const videoId = data.items[0].snippet.resourceId.videoId;
-
-    if (playerEl) {
-      playerEl.innerHTML = `
-        <iframe
-          src="https://www.youtube.com/embed/${videoId}?autoplay=0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
-      `;
     }
   } catch (err) {
-    console.error("YouTube API 호출 실패:", err);
+    console.warn("Cloud Function 호출 실패 (아직 배포 전일 수 있습니다), 기본 임베드를 사용합니다:", err);
     fallbackEmbed();
   }
 }
