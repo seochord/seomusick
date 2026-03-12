@@ -8,12 +8,14 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 - **YouTube Integration**: The home screen features a dynamic YouTube video embed at its center, showcasing the latest content. 
     - **Removal of Labels**: "Latest from YouTube" and "View Channel" labels have been removed from below the video to minimize visual clutter.
     - **Surgical Alignment**: The video dimensions and the slogan text below it are now perfectly aligned at a maximum width of `720px`, creating a balanced, centered column.
+- **Social Media Expansion**: Added **TikTok** (`@seomusick`) to the sidebar social links alongside YouTube and Instagram for broader engagement.
 - **Backend Security**: Moved YouTube Data API calls to **Firebase Cloud Functions** to hide the API Key from the frontend. The key is now stored securely in Firebase Secrets.
 - **Admin Slogan & YouTube Control**: Added management for both English and Korean slogans, and the YouTube Playlist ID in the Admin panel.
 - **Full Persistence**: Admin changes to Hero (Eye Catch, Title, Slogan EN/KO, YouTube Playlist ID) are saved to `localStorage` and reflected on the home screen.
 
 ## Visual Design & Branding
-### Ocean & Harbor Palette (Inspired by `about.jpeg`)
+...
+
 - **Primary Color**: `#335C81` (Deep Harbor Blue) - Used for logos, primary headers, and active states.
 - **Secondary Color**: `#5891AD` (Sky Blue) - Used for secondary elements and hover states.
 - **Accent Color**: `#E9C46A` (Harbor Yellow) - Used for subtle highlights and call-to-action accents.
