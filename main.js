@@ -4,7 +4,7 @@ import { firebaseConfig } from './firebase-config.js';
 console.log('Main.js loaded with v2.3 - Real-time Firestore Integration & Enhanced UI');
 
 // --- YOUTUBE API KEY (Plan B) ---
-const YOUTUBE_API_KEY = "AIzaSyBuvT3BQbU0zy-MJrrbBrXGcWCSjnYA0ic";
+const YOUTUBE_API_KEY = "";
 
 // --- FIREBASE INITIALIZATION ---
 if (!firebase.apps.length) {
