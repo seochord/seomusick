@@ -5,9 +5,10 @@ SEO MUSICK is a personal portfolio website for Seo Eui-seung, a Bible Believer, 
 
 ### Hero Layout Reversion & Slogan Management
 - **Hero Design**: The hero section has been streamlined for a cleaner, more focused look. The "SEO MUSICK" title has been removed to prioritize the visual content and mission statement.
+- **Slogan Position**: The mission statement ("Music of Faith for the Broken") is now positioned **above** the YouTube video, serving as a primary introduction to the visual content.
 - **YouTube Integration**: The home screen features a dynamic YouTube video embed at its center, showcasing the latest content. 
     - **Removal of Labels**: "Latest from YouTube" and "View Channel" labels have been removed from below the video to minimize visual clutter.
-    - **Surgical Alignment**: The video dimensions and the slogan text below it are now perfectly aligned at a maximum width of `720px`, creating a balanced, centered column.
+    - **Surgical Alignment**: The video dimensions and the slogan text above it are now perfectly aligned at a maximum width of `720px`, creating a balanced, centered column.
 - **Social Media Expansion**: Added **TikTok** (`@seomusick`) to the sidebar social links alongside YouTube and Instagram for broader engagement.
 - **Backend Security**: Moved YouTube Data API calls to **Firebase Cloud Functions** to hide the API Key from the frontend. The key is now stored securely in Firebase Secrets.
 - **Admin Slogan & YouTube Control**: Added management for both English and Korean slogans, and the YouTube Playlist ID in the Admin panel.

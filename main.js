@@ -127,12 +127,11 @@ function renderHero() {
 
   // We intentionally omit hero title, h-eye (eye catch), and youtube info labels as requested by the user.
   heroSection.innerHTML = `
-    ${videoHtml}
     <div class="h-brand">
       <p class="hb-en">${finalHero.slogan ? finalHero.slogan.en : ''}</p>
       <p class="hb-ko">${finalHero.slogan ? finalHero.slogan.ko : ''}</p>
     </div>
-    
+    ${videoHtml}
     <div class="h-cta">
       ${ctaHtml}
     </div>
